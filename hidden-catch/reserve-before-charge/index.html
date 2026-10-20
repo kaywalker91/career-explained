@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="게임이 열리지 않았는데 도전권은 줄었습니다. 판 예약과 실제 시작을 나누고 같은 요청의 중복 차감을 막은 과정을 설명합니다.">
+  <title>김대각(kaywalker) - 경력해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/career-explained/assets/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/career-explained/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/career-explained/assets/apple-touch-icon.png">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">PLLI LAB<br>많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">PLLI LAB<br>인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">PLLI LAB<br>실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">틀린그림찾기<br>이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/" aria-current="page">틀린그림찾기<br>게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">틀린그림찾기<br>그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">PLLI LAB<br>많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">PLLI LAB<br>인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">PLLI LAB<br>실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">틀린그림찾기<br>이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/" aria-current="page">틀린그림찾기<br>게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">틀린그림찾기<br>그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / 틀린그림찾기</p>
+  <p class="eyebrow">예약 · 멱등성 · 재화 보호</p>
+  <h1>게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</h1>
+  <p class="lede">게임이 열리지 않았는데 도전권은 줄었습니다. 판 예약과 실제 시작을 나누고 같은 요청의 중복 차감을 막은 과정을 설명합니다.</p>
+  <p class="reading-meta"><span>GAME-002</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>사실·기여·결과의 원본은 <span class="record-ref">프로젝트 기록</span>, <span class="record-ref">서버·상품 운영 근거</span>, <span class="record-ref">실제 업무 결과와 기여 근거</span>입니다. 이번에는 이 기록과 해당 업무일지·계획·인계·모바일 검증 원문, 아래에 명시한 당시 코드 일부를 읽어 대조했습니다. 당시 시험·dev 배포·기기 확인은 그 시점의 기록이며 이번 제품 재실행·현재 운영 조회 결과와 구분합니다. 본인 확인과 당시 기록을 바탕으로 작성했으며, 내부 식별자는 일반 표현으로 바꿨습니다. <a href="/career-explained/">해설 색인</a></p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인·AI·협업자의 기여, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">카드로 접속한 사용자의 한 판이 관리자 기록이 되기까지</a></li><li><a href="#section-01">판이 열리지 않았는데 도전권은 이미 줄었다</a></li><li><a href="#section-02">환불보다 먼저 차감 시점을 바꾸기로 한 이유</a></li><li><a href="#section-03">예약·그림 준비·시작을 분리한 처리 흐름</a></li><li><a href="#section-04">응답을 놓쳐 다시 눌러도 한 번만 차감하기</a></li><li><a href="#section-05">재화 보호에서 본인이 결정한 범위</a></li><li><a href="#section-06">구현·dev 전달과 실패 경로 손검증의 차이</a></li><li><a href="#section-07">예약과 차감 이해 확인</a></li></ol></details>
+  <h2 id="context">카드로 접속한 사용자의 한 판이 관리자 기록이 되기까지</h2>
+<p>이 서비스는 원본과 바뀐 그림을 보고 다른 부분을 찾는 웹 게임입니다. 이용자는 NFC 카드를 휴대폰에 가까이 대 게임으로 들어가고, 로그인한 뒤 판을 선택해 플레이합니다. <strong>NFC</strong>는 가까이 댄 카드의 정보를 읽는 통신 방식입니다. 이 프로젝트에서는 카드 발급·접속과 플레이할 수 있는 횟수를 연결하는 데 쓰였습니다. <strong>도전권</strong>은 한 판을 시작할 수 있는 기회이고, <strong>포인트</strong>는 플레이 결과에 따라 받는 보상입니다. <span class="record-ref">서비스·역할 근거</span></p>
+<p>휴대폰 브라우저는 그림을 보여 주고 터치를 받는 <strong>클라이언트</strong>입니다. 서버는 로그인한 사람이 누구인지, 그 사람이 해당 판을 할 수 있는지, 횟수와 포인트를 어떻게 반영할지 판단합니다. 관리자는 웹 화면에서 그림을 발행하고 상품·카드를 관리하며 플레이 기록을 확인합니다. 따라서 관리자 발행 → 휴대폰의 그림 수신 → 판 시작·플레이 → 서버 정산 → 관리자 기록의 흐름을 함께 봐야 합니다. 서버·관리자 기능에는 JavaScript와 Node.js를 사용하고, 데이터 보관에는 Firestore와 파일 저장소를 사용하는 경로가 있습니다.</p>
+<h2 id="section-01">판이 열리지 않았는데 도전권은 이미 줄었다</h2>
+<p>10월 2일 dev 기록에서 <strong>16:50:57 판 시작 요청 때 도전권이 7→6</strong>으로 줄었지만, 합성 그림 요청이 16초 동안 서버의 nginx에 도달하지 않았고 **16:51:13 <code>STAGE_LOAD_FAILED</code>**가 보고됐습니다. nginx는 여기서 그림 요청을 받는 서버 측 웹 처리 경로입니다. 이 관측은 요청이 그 지점까지 도달하지 않았다는 뜻이며 Norton 등 구체적인 네트워크 원인을 확정한 결과는 아닙니다. <span class="record-ref">변경 전 관측과 근거</span></p>
+<p>문제의 핵심은 <strong>게임 그림을 받기 전에 서버가 판을 열고 횟수를 차감한 순서</strong>였습니다. 그림 받기를 한 번 더 시도해도 끝내 실패하면 손실이 남습니다. 도전 횟수는 실물 카드와 연결된 재화이므로, 화면에 오류를 알리는 처리와 실제 횟수를 보호하는 처리를 함께 봐야 했습니다. <span class="record-ref">사건 원본</span> · <span class="record-ref">당시 계획 원문 위치 HC08</span></p>
+<h2 id="section-02">환불보다 먼저 차감 시점을 바꾸기로 한 이유</h2>
+<p>당시 계획은 실제로 세 가지 방법을 비교했습니다. <strong>A안은 실패 뒤 횟수 반환</strong>, <strong>B안은 예약과 실제 시작 분리</strong>, <strong>C안은 재시도만 두고 손실은 수동 보정</strong>입니다. A안에서는 이미 시작 응답으로 정답 좌표를 받은 뒤 실패라고 주장해 환불받는 문제가 지적됐습니다. 당시 구조는 클릭 기록을 정산 때 받으므로 “아무것도 하지 않고 실패했음”을 시작 직후 서버가 입증하기 어려웠습니다.</p>
+<p>Kay가 승인한 것은 <strong>B안</strong>입니다. 먼저 차감 없이 이번 판을 예약하고, 브라우저가 원본·합성 그림을 준비한 뒤 시작을 요청합니다. 그때 횟수를 차감하고 정답 좌표·타이머를 받습니다. 실패를 주장한 뒤 돌려받는 경로보다 <strong>실제 시작 전에는 차감하지 않는 순서</strong>를 선택한 것입니다. C안의 수동 보정은 과거 손실의 별도 처리 후보이며 이 구현이 이미 잃은 횟수를 자동 반환했다는 뜻은 아닙니다. <span class="record-ref">B안 결정·제약·원문 위치</span> · <span class="record-ref">승인과 구현의 대응</span></p>
+<h2 id="section-03">예약·그림 준비·시작을 분리한 처리 흐름</h2>
+<p>아래는 당시 서버와 화면의 처리 순서를 압축한 설명입니다. 이번에 해당 버전의 판 예약·시작 코드와 화면 코드를 읽었으며, 현재 서비스에서 실행해 추적한 그림은 아닙니다.</p>
+<figure class="diagram"><div class="diagram-scroll" tabindex="0" role="region" aria-label="가로로 넘겨 읽는 처리 흐름도"><img src="/career-explained/assets/diagrams/game-002.svg" alt="차감 없이 판을 예약하고 그림 준비에 성공한 뒤 시작하며, 반복 시작은 같은 세션으로 이어 추가 차감을 막는 흐름" style="min-width:702px" loading="lazy" decoding="async"></div><figcaption>차감 없이 판을 예약하고 그림 준비에 성공한 뒤 시작하며, 반복 시작은 같은 세션으로 이어 추가 차감을 막는 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.<span class="diagram-help">옆으로 넘겨 읽거나 <a href="/career-explained/assets/diagrams/game-002.svg">도식 크게 보기 ↗</a></span></figcaption></figure>
+<p>예약 응답은 그림 주소를 주되 정답 좌표는 주지 않습니다. <strong>TTL</strong>은 예약을 사용할 수 있는 유효 시간이며 당시 승인값은 <strong>120초</strong>입니다. 계정당 미시작 예약 1개·분당 예약 10회 제한도 적용 기록에 있습니다. 같은 판을 재예약하면 유효한 기존 조합을 재사용해 반복 예약으로 원하는 조합을 고르는 일을 제한했습니다. 예약 저장·만료·시작 여부를 추가로 관리해야 하며 그림 자체를 비교해 정답을 추측하는 위험까지 없애는 방식은 아닙니다.</p>
+<p>화면은 그림 준비가 실패하면 실제 시작 함수인 <code>begin()</code>을 부르기 전에 돌아갑니다. 당시 화면 코드는 <strong><code>alert</code> 팝업과 시작 버튼 재클릭</strong>으로 재시도하며, 계획의 화면 안 <code>[다시 시도]</code> 버튼은 시안 검수 때문에 보류됐습니다. 만료는 한 번 재예약하는 처리가 있고 다른 실패는 상태에 맞게 안내합니다. 업무요약의 “인라인 안내 완비”를 이 버전의 실제 구현으로 옮기지 않습니다. <span class="record-ref">계획·구현 차이와 당시 인계 HC09</span></p>
+<h2 id="section-04">응답을 놓쳐 다시 눌러도 한 번만 차감하기</h2>
+<p>그림 준비 뒤 시작 요청을 보냈는데 응답만 끊겼다면, 서버에서는 이미 차감·판 생성이 끝났을 수 있습니다. 다시 요청할 때 새 판을 만들면 횟수가 한 번 더 줄어듭니다. 그래서 같은 예약의 시작을 반복하면 <strong>같은 세션을 돌려주고 추가 차감하지 않는 멱등성</strong>을 적용했습니다. 멱등성은 같은 일을 다시 요청해도 같은 처리 결과로 이어지게 하는 성질입니다.</p>
+<p>당시 순수 판정 코드에는 예약 번호·소유 계정을 확인하고, 이미 시작된 세션이 있으면 만료 검사보다 먼저 그 세션을 재사용하는 순서가 있습니다. 미시작 예약의 만료와 이미 처리한 시작 응답의 재수신을 다르게 다루는 것입니다. 차감·세션 생성·예약의 시작 표시를 <strong>트랜잭션</strong>, 즉 함께 성공하거나 함께 반영되지 않도록 묶는 저장 처리로 연결한 구현은 기존 저장소·시험 diff 대조에 기록돼 있습니다. 파일 저장소와 Firestore 경로를 함께 다뤘다는 근거이며 모든 운영 오류가 검증됐다는 뜻은 아닙니다. <span class="record-ref">저장소 처리·시험 작성 근거</span></p>
+<p>그림 준비 뒤의 <strong>시작 자체가 성공한 다음</strong> 탭을 닫거나 후속 화면 처리에 실패한 경우까지 모두 비차감이 되는 것은 아닙니다. 과거 화면과의 호환을 위해 기존 시작 경로도 남겨 둔 당시 계약입니다. “이미지 준비 전 차감 방지”를 게임의 모든 실패·모든 버전에서 무손실을 보장한다는 표현으로 바꾸지 않습니다.</p>
+<h2 id="section-05">재화 보호에서 본인이 결정한 범위</h2>
+<p>서버·관리자 중심 담당은 사용자 확인입니다. B안·예약 120초·계정당 제한과 문구 등은 당시 Kay의 승인 기록으로 설명합니다. 서버·클라이언트 구현과 다른 AI 세션의 작업이 함께 기록돼 있으므로, 개별 코드 작성·검토·병합·배포 명령과 클라이언트 전체를 본인 단독 수행으로 확정하지 않습니다. 변경 전 nginx 확인을 Kay의 SSH 실행으로 적은 기록도 전체 진단의 단독 수행과 구분합니다. <span class="record-ref">판단·기여·실행자 근거</span></p>
+<h2 id="section-06">구현·dev 전달과 실패 경로 손검증의 차이</h2>
+<p>서버 변경은 <strong>18:28:50</strong>, 화면 변경은 <strong>18:29:03 KST</strong>입니다. 18:41 인계에는 당시 dev 배포본, 발행본 299개 확인·새 캐시 버전 표시와 무인증 요청 401 결과가 기록돼 있습니다. 이는 dev 전달·접근 응답 확인이며 로그인 후 이미지 실패 때 횟수가 유지됐다는 실기기 결과는 아닙니다.</p>
+<p>같은 인계는 라우트 54/54·Firestore 계약 163/163·화면 관련 110/110을 기록하면서 <strong>전체 3,353건 중 실패 21건</strong>도 남깁니다. 부분 통과를 합산하거나 전체 회귀 통과로 바꾸지 않습니다. <strong>NFC 로그인 필요로 손검증 미수행</strong>이라는 문장도 명시돼 있습니다. 계획의 “그림 요청 차단→횟수 불변→차단 해제→한 번 차감”은 해야 할 시험 절차이며 완료된 결과가 아닙니다. <span class="record-ref">당시 배포·시험·미수행 인계</span></p>
+<p>따라서 변경 후 이미지 실패 비차감·응답 재시도·동시 시작의 실제 손검증, 손실률 감소·무손실 운영은 추가 확인입니다. 같은 날 정오 GAME-003의 정상 한 판은 변경 전이므로 이 공백을 채우지 않습니다. 이번에는 당시 코드·문서를 읽었고 게임·시험·배포를 재실행하지 않았습니다.</p>
+<h2 id="section-07">예약과 차감 이해 확인</h2>
+<ol>
+<li>그림 받기 재시도나 실패 뒤 환불보다 예약과 시작을 나눈 이유는 무엇인가요? <a href="#section-02">문제와 대안</a></li>
+<li>시작 응답만 끊긴 뒤 같은 요청을 다시 보내면 왜 같은 세션을 반환해야 하나요? 만료된 미시작 예약과 어떻게 다른가요? <a href="#section-04">멱등성과 저장 처리</a></li>
+<li>구현·dev 배포·부분 시험 통과와 변경 후 횟수 보호의 실제 손검증은 무엇이 다른가요? <a href="#section-06">결과와 결측</a></li>
+</ol>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/hidden-catch/server-decisions/"><span>← 이전 해설</span><strong>이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</strong></a><a href="/career-explained/hidden-catch/mobile-round-check/"><span>다음 해설 →</span><strong>그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">카드로 접속한 사용자의 한 판이 관리자 기록이 되기까지</a></li><li><a href="#section-01">판이 열리지 않았는데 도전권은 이미 줄었다</a></li><li><a href="#section-02">환불보다 먼저 차감 시점을 바꾸기로 한 이유</a></li><li><a href="#section-03">예약·그림 준비·시작을 분리한 처리 흐름</a></li><li><a href="#section-04">응답을 놓쳐 다시 눌러도 한 번만 차감하기</a></li><li><a href="#section-05">재화 보호에서 본인이 결정한 범위</a></li><li><a href="#section-06">구현·dev 전달과 실패 경로 손검증의 차이</a></li><li><a href="#section-07">예약과 차감 이해 확인</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>
