@@ -103,7 +103,10 @@ main { min-width: 0; }
 .mobile-toc { display: none; }
 .diagram { margin: 26px 0; padding: 20px 15px; background: var(--paper); border: 1px solid var(--line); border-radius: 6px; }
 .diagram img { display: block; width: 100%; height: auto; max-width: 560px; margin: auto; }
+.diagram-scroll { overflow-x: auto; max-width: 100%; }
 .diagram figcaption { margin-top: 16px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+.diagram-help { display: block; margin-top: 8px; }
+.diagram-help a { display: inline-block; min-height: 34px; }
 .reading-footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
 .reading-footer p { margin: 0; }
 .article-pagination { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; border-top: 1px solid var(--line); margin-top: 42px; padding-top: 26px; }
@@ -120,6 +123,7 @@ main { min-width: 0; }
   .mobile-toc summary { cursor: pointer; color: var(--accent); }
   .mobile-toc ol { padding-left: 22px; margin: 14px 0; }
   .mobile-toc li { margin-top: 8px; }
+  .mobile-toc a { display: block; min-height: 44px; padding: 8px 0; }
   .site-footer { margin-inline: 40px; }
 }
 @media (max-width: 760px) {
