@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="총점이 높아도 부적합이었던 심사부터, 탭의 의미 정보·번역 경로·색상 시험과 개선 문서의 확인 한계까지 설명합니다.">
+  <title>김대각(kaywalker) - 경력해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/career-explained/assets/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/career-explained/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/career-explained/assets/apple-touch-icon.png">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category" open><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/" aria-current="page">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category" open><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/" aria-current="page">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / <a href="/career-explained/#category-seesun-it">시선아이티</a> / <a href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a></p>
+  <p class="eyebrow">접근성 · 선택과 동작</p>
+  <h1>탭의 이름·선택·동작을 접근성 안내로 연결하기</h1>
+  <p class="lede">총점이 높아도 부적합이었던 심사부터, 탭의 의미 정보·번역 경로·색상 시험과 개선 문서의 확인 한계까지 설명합니다.</p>
+  <p class="reading-meta"><span>SEESUN-007</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>두 앱의 Flutter 앱 부분 전환을 본인이 단독 수행했다는 것은 <span class="record-ref">사용자 확인</span>입니다. SEESUN-001의 구체적인 코드 예시와 SEESUN-004의 심사·개선은 <strong>안전디딤돌 한국어 앱</strong>, SEESUN-007은 <strong>이머전시레디 외국어 앱</strong>의 자료입니다. 접근성 분석·수정·실기기 검증의 개인 분담과 후속 인증 결과는 별도 확인 대상입니다. 비공개 근거는 제목으로 표시하며, 앱 전환과 개별 접근성 업무의 기여·시험·인증 범위를 구분합니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인·AI·협업자의 기여, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">재난 정보를 보는 사람에게 필요한 화면</a></li><li><a href="#section-01">총점이 높아도 필요한 기능에 접근하지 못할 수 있다</a></li><li><a href="#section-02">탭의 이름·선택 상태·동작을 한곳에서 연결한다</a></li><li><a href="#section-03">화면 번역과 음성 접근성 안내는 다른 경로를 쓴다</a></li><li><a href="#section-04">색상 조합을 관리하고 시험의 실제 기대값을 읽는다</a></li><li><a href="#section-05">개선 완료 문서와 보관 코드를 함께 읽어야 한다</a></li><li><a href="#section-06">개인 역할과 이번에 확인한 결과</a></li><li><a href="#section-07">이머전시레디 접근성 이해 확인</a></li></ol></details>
+  <h2 id="context">재난 정보를 보는 사람에게 필요한 화면</h2>
+<p>안전디딤돌은 재난 문자·기상 정보·행동요령·대피시설을 확인하는 앱입니다. 이머전시레디는 한국에서 외국어를 사용하는 사람에게 안전 정보를 안내하는 별도의 앱입니다. 아래에서는 공통 코드 전환과 데이터의 화면 반영을 먼저 설명하고, 이어 두 앱의 정보를 읽고 조작할 수 있도록 보완한 접근성을 앱별로 다룹니다. 다국어·지역 알림·시설 검색 등은 연결된 다른 사건에서 이어 갑니다. <span class="record-ref">서비스 범위와 기술의 역할</span></p>
+<h2 id="section-01">총점이 높아도 필요한 기능에 접근하지 못할 수 있다</h2>
+<p>이머전시레디를 쓰는 외국어 사용자가 긴급전화나 지도를 열려면 하단의 탭에서 원하는 기능을 찾아야 합니다. 화면을 눈으로 읽기 어려운 경우에는 화면 읽기 도구가 알려 주는 <strong>기능 이름·현재 선택·조작 방법</strong>을 바탕으로 이동합니다. 메뉴를 번역하는 일에 더해, 보조기술로도 그 뜻과 상태를 이해하고 실제 기능을 열 수 있어야 합니다. 여기서 접근성의 기본 개념은 <a href="/career-explained/disaster-safety/safekorea-accessibility/#section-01">앞 절의 설명</a>과 같습니다.</p>
+<p>이 앱의 1차 심사는 <strong>2025-08-04~08-06, Android·iOS 각각 20화면</strong>을 대상으로 했습니다. 두 PDF 6쪽에는 종합 <strong>95.56%·과락 3개·부적합</strong>, 7쪽에는 한 항목이라도 95% 미만이면 총점과 관계없이 불합격이라는 기준이 적혀 있습니다. <strong>95.56%는 개선 전 외부 평가값</strong>입니다. 안전디딤돌의 점수나 개선 후 인증 결과와 합치지 않습니다. <span class="record-ref">Android 심사 총평</span> · <span class="record-ref">iOS 심사 총평</span></p>
+<p>다음 표는 두 PDF 7쪽의 과락 항목입니다. 비율의 분모는 각 플랫폼의 평가 대상 20화면이며, 통과한 화면 수와 함께 읽습니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>과락 항목</th>
+  <th>사용자가 겪는 문제</th>
+  <th style="text-align:right">Android</th>
+  <th style="text-align:right">iOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>대체 텍스트</td>
+  <td>그림·버튼의 목적을 음성 설명으로 이해하기 어려움</td>
+  <td style="text-align:right">16/20, 80%</td>
+  <td style="text-align:right">15/20, 75%</td>
+</tr>
+<tr>
+  <td>명도 대비</td>
+  <td>글자·아이콘을 배경에서 구별하기 어려움</td>
+  <td style="text-align:right">15/20, 75%</td>
+  <td style="text-align:right">15/20, 75%</td>
+</tr>
+<tr>
+  <td>초점</td>
+  <td>화면 읽기 도구로 필요한 대상을 찾아 이동하기 어려움</td>
+  <td style="text-align:right">15/20, 75%</td>
+  <td style="text-align:right">16/20, 80%</td>
+</tr>
+</tbody>
+</table></div>
+<p>총점은 같아도 대체 텍스트와 초점의 결과는 플랫폼별로 다릅니다. 아래의 탭·색상 코드는 이 사용 문제에 대응하는 구현이며, 심사 대상 전체의 오류가 해소됐다는 증거는 아닙니다. <span class="record-ref">Android 항목별 결과</span> · <span class="record-ref">iOS 항목별 결과</span></p>
+<h2 id="section-02">탭의 이름·선택 상태·동작을 한곳에서 연결한다</h2>
+<p>재직 중인 2025-07-18의 재직 중 보관본에는 Flutter 기본 하단 메뉴인 <code>BottomNavigationBar</code>에 아이콘·화면 문구·현재 인덱스·탭 처리 함수를 넣는 코드가 있습니다. 2025-08-14로 기재된 개선 문서는 네 탭을 공통 함수로 만들고 각각에 명시적인 의미 정보를 붙이는 변경을 설명합니다. 이것은 문서와 두 코드 버전에서 읽은 변화입니다. 기본 메뉴 자체가 접근성을 지원하지 않는다거나 당시 초점 오류의 유일한 원인이었다고 단정하지 않습니다. <span class="record-ref">이전 탭 구성</span> · <span class="record-ref">탭 개선 기록</span></p>
+<p>후속 보관 버전 후속 보관본(2026-01-10)의 공통 탭 함수는 <strong><code>Semantics</code></strong>, 즉 화면 요소의 뜻·상태·동작을 보조기술에 전달하는 구성을 사용합니다. 한 탭에 다음 정보를 함께 제공합니다. <span class="record-ref">공통 탭 함수</span></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>전달할 정보</th>
+  <th>코드에서 맡은 역할</th>
+  <th>사용자가 알아야 하는 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>이름·조작 안내</td>
+  <td><code>label</code>·<code>hint</code></td>
+  <td>어느 기능이며 어떻게 여는지</td>
+</tr>
+<tr>
+  <td>버튼 역할</td>
+  <td><code>button: true</code></td>
+  <td>설명 글이 아니라 실행할 수 있는 대상이라는 점</td>
+</tr>
+<tr>
+  <td>현재 선택</td>
+  <td><code>selected: isSelected</code></td>
+  <td>지금 보고 있는 화면에 해당하는 탭인지</td>
+</tr>
+<tr>
+  <td>보조기술의 활성화</td>
+  <td><code>onTap</code></td>
+  <td>선택한 탭의 화면으로 전환 요청</td>
+</tr>
+<tr>
+  <td>자식 정보 제외</td>
+  <td><code>excludeSemantics: true</code></td>
+  <td>안쪽 아이콘·글자 대신 바깥에 지정한 의미 정보를 사용</td>
+</tr>
+</tbody>
+</table></div>
+<p>자식 정보를 제외하면 같은 탭의 아이콘과 글자가 따로 중복 안내되는 것을 조정할 수 있습니다. 그만큼 바깥에 붙인 이름·상태·동작을 빠짐없이 관리해야 합니다. 공통 함수는 네 탭에 같은 구성을 적용하고, 일반 터치를 받는 <code>InkWell</code>과 보조기술의 활성화가 모두 **같은 <code>_onItemTapped(index)</code>**를 호출하도록 연결합니다. 이는 코드에서 읽은 선택 이유이며 당시 본인의 대안 비교·결정 과정으로 확정하지 않습니다.</p>
+<p>이 함수가 호출되면 현재 탭 번호를 상태에 저장하고, 앱 안의 웹 화면이 겹쳐 열려 있다면 숨기도록 요청합니다. 화면은 같은 탭 상태를 읽어 Home·SafeCall·SafeMap·Setting 중 표시할 내용을 고릅니다. 각 탭도 그 상태와 자신의 번호를 비교해 선택 여부를 다시 전달합니다. <strong>화면을 바꾸는 상태와 선택 안내를 만드는 상태가 연결된 구조</strong>입니다. <span class="record-ref">탭 선택 처리</span> · <span class="record-ref">상태 구독과 화면 선택</span></p>
+<figure class="diagram"><div class="diagram-scroll" tabindex="0" role="region" aria-label="가로로 넘겨 읽는 처리 흐름도"><img src="/career-explained/assets/diagrams/seesun-007.svg" alt="일반 터치와 보조기술의 탭 활성화를 같은 함수·현재 탭 상태에 연결한 코드 흐름" style="min-width:480px" loading="lazy" decoding="async"></div><figcaption>일반 터치와 보조기술의 탭 활성화를 같은 함수·현재 탭 상태에 연결한 코드 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.<span class="diagram-help">옆으로 넘겨 읽거나 <a href="/career-explained/assets/diagrams/seesun-007.svg">도식 크게 보기 ↗</a></span></figcaption></figure>
+<p>이 도식은 코드의 호출·상태 연결입니다. 실제 TalkBack·VoiceOver에서 탐색 순서·낭독·화면 전환이 성공했는지는 별도 기기 시험이 필요합니다.</p>
+<h2 id="section-03">화면 번역과 음성 접근성 안내는 다른 경로를 쓴다</h2>
+<p>탭에 보이는 문구는 선택 언어의 <code>localizationData</code>에서 가져옵니다. 반면 같은 탭에 전달하는 접근성 이름은 <code>Home 버튼</code>·<code>SafeCall 버튼</code> 같은 고정 문자열이고, 조작 안내도 “두 번 탭하면 Home 화면으로 이동합니다.”처럼 한국어로 고정돼 있습니다. 앞의 공통 함수는 자식의 의미 정보를 제외하므로 <strong>화면에 번역된 문구가 보이는 것과 바깥의 접근성 이름·안내가 번역되는 것은 서로 다른 확인 대상</strong>입니다. <span class="record-ref">화면 문구와 고정 접근성 문구의 전달</span></p>
+<p>따라서 확인한 결과는 이름·선택·활성화 정보를 붙인 구조까지입니다. 외국어 사용자가 이해할 수 있는 음성 안내를 모두 완성했다고 확대하지 않습니다. 앱이 재난 문자를 읽어 주는 음성 기능과 화면 읽기 도구가 탭의 의미 정보를 읽는 기능도 구분합니다. 전자의 언어 변경 연결은 <span class="record-ref">SEESUN-005의 별도 근거</span>에서 다룹니다.</p>
+<h2 id="section-04">색상 조합을 관리하고 시험의 실제 기대값을 읽는다</h2>
+<p>하단 탭은 파란 배경 <code>#1A3A6A</code> 위에 선택된 아이콘·글자는 흰색, 선택되지 않은 것은 <code>#E0E0E0</code>을 쓰며 선택된 글자는 굵게 표시합니다. 색상·굵기의 시각적 표시와 앞서 설명한 <code>selected</code> 의미 정보가 같은 선택 상태를 사용합니다. 공통 색상 파일에는 밝은 글자색을 불투명한 색으로 관리하고 일부 강조색을 더 진하게 정의한 내용도 있습니다. 여러 화면이 참조하는 색을 한곳에서 관리하는 구조이며 모든 화면의 대비 충족을 입증한 결과와는 구분합니다. <span class="record-ref">공통 색상 정의</span> · <span class="record-ref">탭의 선택별 시각 표시</span></p>
+<p><code>ContrastUtils</code>는 두 색의 RGB 값으로 밝기를 구하고 밝은 쪽과 어두운 쪽을 비교하는 <strong>대비 비율 계산 도구</strong>입니다. <code>contrast_test.dart</code>는 지정한 색 조합의 계산 결과가 기대값 이상인지 검사하도록 작성돼 있습니다. 대표 예는 다음과 같습니다. <span class="record-ref">대비 계산</span> · <span class="record-ref">대표 조합의 시험 정의</span></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>시험에 지정한 조합</th>
+  <th style="text-align:right">코드의 기대값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>진한 기본 배경 <code>primaryDark</code>와 흰색·밝은 회색 글자</td>
+  <td style="text-align:right">3:1 이상</td>
+</tr>
+<tr>
+  <td>흰 배경과 진한 글자 <code>textDark</code></td>
+  <td style="text-align:right">4.5:1 이상</td>
+</tr>
+<tr>
+  <td>흰 배경과 중간 글자 <code>textMedium</code></td>
+  <td style="text-align:right">3:1 이상</td>
+</tr>
+</tbody>
+</table></div>
+<p>첫 행의 <code>primaryDark</code>는 하단 탭 배경 <code>primaryBlue</code>와 다른 값입니다. 이 표는 시험에 적힌 조건의 설명이며 하단 탭을 그대로 실행·검증한 결과가 아닙니다. 특히 색상 파일의 주석은 일반 글자에 4.5:1을 설명하지만, 위 시험 일부의 기대값은 3:1입니다. 주석의 “모든 조합 검증”이나 시험 이름을 전체 화면·일반 글자에 대한 4.5:1 충족으로 바꾸지 않습니다. <strong>이번에는 Flutter 대비 시험을 실행하지 않았습니다.</strong> 실제 배경·글자 크기·투명도와 양 플랫폼의 화면 검증도 남아 있습니다.</p>
+<h2 id="section-05">개선 완료 문서와 보관 코드를 함께 읽어야 한다</h2>
+<p>헤더 개선 문서는 앱 정보와 닫기 버튼을 독립적인 의미 정보로 나누고, 닫기 버튼에 <code>Close</code>·<code>Close navigation menu</code>라는 설명을 붙였다고 기재합니다. 그러나 고정 버전의 <code>app_drawer.dart</code> 헤더 215~274행을 읽으면 앱 이름·소개 글과 <code>Material</code>·<code>InkWell</code>·닫기 아이콘으로 구성돼 있습니다. 같은 파일에서 <code>Semantics</code>·<code>Close navigation menu</code>를 검색한 결과도 일치 0건입니다. 따라서 <strong>문서가 설명하는 명시적 래퍼·안내를 이 보관 코드에서 확인하지 못한 차이</strong>로 남깁니다. 실제 보조기술의 읽기 결과까지 이 검색으로 판정하지 않습니다. <span class="record-ref">헤더 개선 문서</span> · <span class="record-ref">보관된 헤더 코드</span></p>
+<p>탭 개선 문서는 debug APK 빌드 성공을 기재하면서 TalkBack·VoiceOver의 탐색·낭독·활성화는 권장 시험으로 적고 있습니다. 문서의 “완전한 지원”·“기준 충족”이라는 표현과 빌드 성공 기재를 실기기 시험·외부 재심사 합격의 증거로 사용하지 않습니다. 두 개선 문서의 날짜는 <strong>2025-08-14</strong>, Git에 추가된 기록은 <strong>2025-12-09 문서 추가 커밋</strong>, 이번에 대조한 후속 보관 코드는 <strong>2026-01-10 후속 보관본</strong>입니다. 문서 날짜·Git 보관일·실제 구현·시험·릴리스일을 구분합니다. <span class="record-ref">자료 시점과 실행 범위</span> · <span class="record-ref">기존 사건의 시점 기록</span></p>
+<h2 id="section-06">개인 역할과 이번에 확인한 결과</h2>
+<p>접근성 대응은 기존 이력서에 기재된 개인 경험이고 두 앱 Flutter 전환의 단독 수행은 사용자 확인입니다. 이머전시레디의 접근성 분석·탭/색상 수정·기기 시험·심사 대응을 직접 맡은 세부 범위, 당시 판단·대안 비교·AI 공동 작성과 팀 분담은 추가 확인입니다. 전환을 혼자 했다는 사실이나 Git 작성자만으로 접근성 업무 전체를 개인 성과로 확정하지 않습니다. <span class="record-ref">원본의 기여·확인 경계</span> · <span class="record-ref">전환의 사용자 확인</span></p>
+<p>이번 해설은 두 1차 심사 PDF의 총평·항목별 표를 텍스트·이미지로 다시 읽고, 고정 코드·개선 문서·대비 시험 정의와 대조했습니다. 확인한 결과는 <strong>높은 총점에도 남은 세 가지 사용 문제, 탭의 이름·선택·동작 연결, 색상 시험의 대상과 기대값, 다국어 안내·헤더 문서의 한계를 설명할 수 있다는 것</strong>입니다. 세 과락 항목 전체 해소나 개선율을 측정한 결과가 아닙니다.</p>
+<p>이번 앱 빌드·Flutter 시험·실기기 TalkBack/VoiceOver·릴리스·후속 재심사·최종 인증은 미수행입니다. 개인 세부 기여와 후속 자료는 확보 뒤 보완하며,</p>
+<h2 id="section-07">이머전시레디 접근성 이해 확인</h2>
+<ol>
+<li>두 플랫폼이 모두 95.56%인데도 부적합인 이유는 무엇이며, 항목별 차이는 어디에 있나요? <a href="#section-01">심사 결과와 분모</a></li>
+<li>일반 터치·보조기술의 활성화·화면 표시·현재 선택 안내는 어떤 상태와 함수로 연결되나요? 화면 번역이 있어도 음성 안내를 따로 확인해야 하는 이유는 무엇인가요? <a href="#section-02">탭의 처리 흐름</a> · <a href="#section-03">언어 경로의 차이</a></li>
+<li>대비 시험 정의·문서의 완료 기재·현재 코드 대조·실기기 성공·인증 합격은 각각 어떤 증거가 필요한가요? <a href="#section-04">시험의 실제 범위</a> · <a href="#section-05">문서와 코드의 차이</a> · <a href="#section-06">역할과 결과</a></li>
+</ol>
+<p>위 질문은 본문 이해 확인용입니다. 실제 독자 이해도·자기 설명·면접 효과는 확인하지 않았습니다.</p>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/disaster-safety/safekorea-accessibility/"><span>← 이전 해설</span><strong>재난 정보를 읽고 조작하는 접근성 보완하기</strong></a><a href="/career-explained/linknote/share-recovery/"><span>다음 해설 →</span><strong>공유한 링크를 저장 화면까지 이어 주기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">재난 정보를 보는 사람에게 필요한 화면</a></li><li><a href="#section-01">총점이 높아도 필요한 기능에 접근하지 못할 수 있다</a></li><li><a href="#section-02">탭의 이름·선택 상태·동작을 한곳에서 연결한다</a></li><li><a href="#section-03">화면 번역과 음성 접근성 안내는 다른 경로를 쓴다</a></li><li><a href="#section-04">색상 조합을 관리하고 시험의 실제 기대값을 읽는다</a></li><li><a href="#section-05">개선 완료 문서와 보관 코드를 함께 읽어야 한다</a></li><li><a href="#section-06">개인 역할과 이번에 확인한 결과</a></li><li><a href="#section-07">이머전시레디 접근성 이해 확인</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>

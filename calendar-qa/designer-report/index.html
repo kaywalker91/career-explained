@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="내부 좌표를 쪽수·행·인쇄 문구로 풀고, 수정할 오류와 사람이 판단할 차이를 구분한 보고 방식을 설명합니다.">
+  <title>김대각(kaywalker) - 경력해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/career-explained/assets/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/career-explained/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/career-explained/assets/apple-touch-icon.png">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category" open><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/" aria-current="page">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category" open><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/" aria-current="page">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / <a href="/career-explained/#category-rowoon-company">로운컴퍼니</a> / <a href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a></p>
+  <p class="eyebrow">보고 설계 · 사용자 관점</p>
+  <h1>오류를 디자이너가 찾을 수 있는 위치로 전달하기</h1>
+  <p class="lede">내부 좌표를 쪽수·행·인쇄 문구로 풀고, 수정할 오류와 사람이 판단할 차이를 구분한 보고 방식을 설명합니다.</p>
+  <p class="reading-meta"><span>QA-003</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>이번에는 08-24·09-22 업무요약과 범위 게이트 계획, 당시 판정·연결 코드, 보관 리포트를 읽었습니다. QA-004의 수정 전후 PDF 네 개는 해당 쪽의 글자와 행 위치를 다시 읽고 파일 해시도 대조했습니다. 이 직접 관측과 당시 검사·시험·콘솔 반영 기록을 구분합니다. 검사기 재실행·원본 PDF 수정·메일 발송·현재 팀원 사용 확인은 수행하지 않았습니다. 비공개 근거는 제목으로 표시하며 내부 식별자·제품명은 설명에 필요한 일반 표현으로 바꿨습니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인·AI·협업자의 기여, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">인쇄 전에 날짜와 일정을 확인하는 도구</a></li><li><a href="#section-01">찾았다는 사실을 고칠 수 있는 위치로 전달하기</a></li><li><a href="#section-02">위치·판정 수준·검사 범위를 함께 바꾸기</a></li><li><a href="#section-03">19쪽에서 0쪽으로 바뀐 수치의 의미</a></li><li><a href="#section-04">보고 방식 이해 확인</a></li></ol></details>
+  <h2 id="context">인쇄 전에 날짜와 일정을 확인하는 도구</h2>
+<p>디자이너는 달력과 다이어리에 날짜·요일·기념일·학사일정을 배치합니다. 한 자리 숫자가 틀리거나 기념일이 옆 날짜 칸에 놓이면, 화면상으로는 자연스러워 보여도 실제 날짜와 맞지 않는 제품이 됩니다. 캘린더 QA는 인쇄할 <strong>PDF의 오류 위치·인쇄값·예상값을 찾아 보고</strong>하는 도구입니다. 인디자인 원고나 PDF를 자동으로 고치는 도구로 설명하지 않습니다.</p>
+<p>처리는 PDF에서 글자와 위치 읽기 → 어느 날짜·어느 지면의 내용인지 묶기 → 정답 달력·고객사 요청·제품별 인쇄 규격과 비교 → 디자이너가 읽는 보고의 순서입니다. TypeScript는 이 읽기·비교·보고 처리를 작성한 언어입니다. <strong>추출</strong>은 PDF 안의 글자와 위치를 검사에 쓸 데이터로 바꾸는 일이고, <strong>판형</strong>은 날짜·요일·그림이 배치된 지면 구성입니다. PDF를 열 수 있어도 새로운 판형의 날짜 칸까지 알아볼 수 있다는 뜻은 아닙니다.</p>
+<p>비교 기준도 하나로 뭉치지 않습니다. 날짜와 요일은 정답 달력을, 고객사 기념일은 요청 목록을, 제품 고유의 색은 확정 인쇄 규격을 따릅니다. 예를 들어 대학 다이어리는 <strong>파랑=휴일, 진회색=본달 평일·토요일, 연한 회색=이웃달</strong>이 정상입니다. 일반 달력의 관습보다 이 제품 계약을 우선합니다. 실제 인쇄와 확정 규격이 맞는데 보고가 충돌하면 검사기의 판정을 조사합니다. <span class="record-ref">확정 제품 계약</span></p>
+<h2 id="section-01">찾았다는 사실을 고칠 수 있는 위치로 전달하기</h2>
+<p>검사기가 내부 결함 코드나 PDF 좌표만 알려 주면, 디자이너는 원고를 열어 그 값이 가리키는 자리를 다시 찾아야 합니다. PDF 내부 좌표는 글자를 읽고 배치 관계를 계산하는 데 필요하지만, 원고를 수정하는 사람에게 바로 쓸 수 있는 위치 설명은 아니었습니다. 09-22 기록은 결과의 독자를 <strong>인디자인 디자이너</strong>로 정하고, 쪽수·표/칸 이름·실제 인쇄 문구로 보고하도록 바꾼 작업을 설명합니다. <span class="record-ref">사건 원본</span> · <span class="record-ref">09-22 업무요약</span>, §4</p>
+<p>예를 들어 학사일정의 날짜·요일이 어긋났다면 “좌표 x, y의 오류”보다 <strong>3쪽 학사일정 표의 ‘2026. 2. 10.(수) ~ 2. 26.(금)’ 행</strong>이라는 문구로 위치를 찾게 합니다. 이는 당시 업무요약에 기재된 위치 표현 예시이며 해당 행을 이번에 실제 PDF 오류로 재확정한 사례는 아닙니다. 좌표를 내부 계산에서도 없앴다는 뜻으로 설명하지 않습니다.</p>
+<h2 id="section-02">위치·판정 수준·검사 범위를 함께 바꾸기</h2>
+<p>보고는 읽어 낸 글자를 정답과 비교한 뒤, 그 차이를 사람이 찾을 수 있는 행·칸 설명으로 바꾸어 전달합니다. 위치뿐 아니라 <strong>즉시 고쳐야 하는 오류와 추가 판단이 필요한 차이</strong>도 구분했습니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>보고할 상황</th>
+  <th>당시 처리와 이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>날짜·연도 숫자가 틀리거나 필요한 일정 칸이 비어 있음</td>
+  <td>‘고쳐야 함’으로 보고. 인쇄 내용과 기준의 불일치를 분명히 전달</td>
+</tr>
+<tr>
+  <td>비슷한 업무명이 있으나 일부 글자 표기가 다름</td>
+  <td>‘확인 필요’로 보고하고 발견한 비슷한 문구를 함께 제시. 표현 차이인지 사람이 판단할 단서 제공</td>
+</tr>
+<tr>
+  <td>메모 지면 상단의 연도</td>
+  <td>날짜 격자가 없는 지면도 알아보고 연도 비교에 연결</td>
+</tr>
+<tr>
+  <td>날짜·요일·달·연도 표기가 없는 안내 글 지면</td>
+  <td>검사할 날짜 지면과 구분해 미인식 집계에서 제외</td>
+</tr>
+</tbody>
+</table></div>
+<p>업무명 비교에는 <strong>편집거리</strong>, 즉 한 문구를 다른 문구로 바꿀 때 필요한 글자 추가·삭제·교체 정도를 이용한 유사도 처리가 기록돼 있습니다. 비슷한 문구를 찾아 판단 근거를 제공하는 역할이며, 뜻이 같은지 AI가 확정하거나 날짜 오류를 유사하다는 이유로 통과시키는 기능으로 설명하지 않습니다. 제품에 맞는 정답과 오류 등급 규칙, 실제 발견 문구를 함께 관리해야 합니다. <span class="record-ref">09-22 업무요약</span>, §5</p>
+<h2 id="section-03">19쪽에서 0쪽으로 바뀐 수치의 의미</h2>
+<p>해당 대학 다이어리에서는 76~92쪽의 <strong>메모 지면 17쪽</strong>을 분류하고 상단 연도를 검사하는 처리를 추가했습니다. 2·4쪽의 안내 글은 날짜 관련 표기가 없는 설명 지면으로 분류했습니다. 당시 <strong>‘못 읽은 쪽 19→0’에는 이 두 종류의 변화가 함께 포함</strong>됩니다. 19쪽 모두에서 날짜를 새로 읽었다거나 모든 PDF를 지원하게 됐다는 수치가 아닙니다.</p>
+<p>메모 연도 <code>2026</code>을 <code>2025</code>로 바꾼 <strong>결함 주입 시험</strong>에서 연도 불일치 1건을 찾았다는 기록도 있습니다. 결함 주입은 일부러 틀린 입력을 만들어 검사기가 찾는지 확인하는 방법입니다. 당시 시험 보고를 읽은 것이며 이번에 PDF를 조작하거나 시험을 재실행하지 않았습니다. 실제 인쇄 오류 세 사례는 다음 QA-004에서 별도로 설명합니다.</p>
+<p>본인의 초기 기획·설계 담당 확인을 유지하되, 개별 보고 문구·유사도 코드·메모 추출기·시험을 모두 본인이 단독 작성했다고 확대하지 않습니다. AI와 개별 구현·검증의 세부 분담은 추가 확인입니다. 당시 콘솔 반영과 안내문 갱신 기록도 있지만 팀원 화면 새로고침 안내는 대기였으므로 <strong>모든 팀원이 새 결과를 읽었다는 확인은 아닙니다</strong>. 수정 시간 절감·오류율 감소·전체 판형 지원은 미측정입니다. <span class="record-ref">디자인팀 전달 경로와 한계</span></p>
+<h2 id="section-04">보고 방식 이해 확인</h2>
+<ol>
+<li>내부 좌표가 검사에 필요해도 디자이너에게 다른 위치 표현을 제공한 이유는 무엇인가요? <a href="#section-01">독자와 위치</a></li>
+<li>‘고쳐야 함’과 ‘확인 필요’를 나누고 비슷한 문구를 보여 주는 이유는 무엇인가요? <a href="#section-02">보고 단계</a></li>
+<li>못 읽은 쪽 19→0과 연도 결함 주입 검출은 각각 무엇을 확인하나요? <a href="#section-03">해당 파일의 결과 범위</a></li>
+</ol>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/calendar-qa/coverage-gate/"><span>← 이전 해설</span><strong>읽지 못한 문서를 정상으로 보고하지 않기</strong></a><a href="/career-explained/calendar-qa/printed-error-comparison/"><span>다음 해설 →</span><strong>검출한 오류를 실제 인쇄물·수정본과 대조하기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">인쇄 전에 날짜와 일정을 확인하는 도구</a></li><li><a href="#section-01">찾았다는 사실을 고칠 수 있는 위치로 전달하기</a></li><li><a href="#section-02">위치·판정 수준·검사 범위를 함께 바꾸기</a></li><li><a href="#section-03">19쪽에서 0쪽으로 바뀐 수치의 의미</a></li><li><a href="#section-04">보고 방식 이해 확인</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>

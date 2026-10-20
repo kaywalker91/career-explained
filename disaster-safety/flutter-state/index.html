@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="두 운영체제의 화면을 공통 코드로 옮기면서, 조회 중·성공·실패 상태와 데이터 전달의 역할을 정리한 구조를 설명합니다.">
+  <title>김대각(kaywalker) - 경력해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/career-explained/assets/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/career-explained/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/career-explained/assets/apple-touch-icon.png">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category" open><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/" aria-current="page">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category" open><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/" aria-current="page">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category"><summary>플레이스링크<span>0편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><p class="menu-empty">공개 해설 0편</p></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / <a href="/career-explained/#category-seesun-it">시선아이티</a> / <a href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a></p>
+  <p class="eyebrow">Flutter 전환 · 상태 관리</p>
+  <h1>앱 화면 전환과 데이터 갱신을 함께 정리하기</h1>
+  <p class="lede">두 운영체제의 화면을 공통 코드로 옮기면서, 조회 중·성공·실패 상태와 데이터 전달의 역할을 정리한 구조를 설명합니다.</p>
+  <p class="reading-meta"><span>SEESUN-001</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>두 앱의 Flutter 앱 부분 전환을 본인이 단독 수행했다는 것은 <span class="record-ref">사용자 확인</span>입니다. SEESUN-001의 구체적인 코드 예시와 SEESUN-004의 심사·개선은 <strong>안전디딤돌 한국어 앱</strong>, SEESUN-007은 <strong>이머전시레디 외국어 앱</strong>의 자료입니다. 접근성 분석·수정·실기기 검증의 개인 분담과 후속 인증 결과는 별도 확인 대상입니다. 비공개 근거는 제목으로 표시하며, 앱 전환과 개별 접근성 업무의 기여·시험·인증 범위를 구분합니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인·AI·협업자의 기여, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">재난 정보를 보는 사람에게 필요한 화면</a></li><li><a href="#section-01">전환 중 문제는 데이터를 받은 뒤 화면을 맞추는 일이었다</a></li><li><a href="#section-02">공통 화면·상태 관리·데이터 조회에 각각 역할을 줬다</a></li><li><a href="#section-03">재직 중 코드에서는 위치 상태와 날씨 화면의 구독이 연결돼 있다</a></li><li><a href="#section-04">후속 보관 코드에서는 조회 담당과 상태 변경 순서가 더 구체적으로 보인다</a></li><li><a href="#section-05">본인 역할과 코드 시점을 함께 읽기</a></li><li><a href="#section-06">확인된 결과와 남은 한계</a></li><li><a href="#section-07">전환과 상태 흐름 이해 확인</a></li></ol></details>
+  <h2 id="context">재난 정보를 보는 사람에게 필요한 화면</h2>
+<p>안전디딤돌은 재난 문자·기상 정보·행동요령·대피시설을 확인하는 앱입니다. 이머전시레디는 한국에서 외국어를 사용하는 사람에게 안전 정보를 안내하는 별도의 앱입니다. 아래에서는 공통 코드 전환과 데이터의 화면 반영을 먼저 설명하고, 이어 두 앱의 정보를 읽고 조작할 수 있도록 보완한 접근성을 앱별로 다룹니다. 다국어·지역 알림·시설 검색 등은 연결된 다른 사건에서 이어 갑니다. <span class="record-ref">서비스 범위와 기술의 역할</span></p>
+<h2 id="section-01">전환 중 문제는 데이터를 받은 뒤 화면을 맞추는 일이었다</h2>
+<p>기존 이력서 R-002의 6쪽 자기소개서 §3에는 Flutter 전환 과정에서 기존 데이터를 맞춰 갱신하는 문제가 자주 발생했다고 기재돼 있습니다. 4쪽 경력기술서는 Android·iOS별 Native 앱을 공통 코드로 전환한 경험을 연결합니다. 당시 본인의 설명은 사용자 경험과 서비스 안정성을 우선해 데이터 흐름을 단순화했다는 것입니다. <span class="record-ref">원문에서 확인한 문제·대응·결과</span></p>
+<p>문제를 이해하기 위한 예로, 화면에 지역명과 날씨가 함께 보이는 상황을 생각할 수 있습니다. 위치를 확인하는 일과 날씨를 받아 오는 일은 시간이 걸리므로, 아직 조회 중인 상태와 조회에 실패한 상태를 구분해야 합니다. 이전에 저장한 정보를 보여 준다면 새 정보와도 구분해야 합니다. 이는 상태 관리가 필요한 이유를 설명하는 예이며, 당시 실제로 지역명과 날씨가 어긋난 장애를 재현했다는 뜻은 아닙니다. 확인한 근거는 위 원문 대조의 동기화 문제·대응 서술이며, 장애별 재현 로그·정확한 원인 함수·수정 전후 시험 결과는 추가 확인으로 남깁니다.</p>
+<p>여기서 <strong>상태</strong>는 데이터 값뿐 아니라 “조회 중인가”, “저장해 둔 정보가 있는가”, “실패했는가”처럼 지금 화면을 결정하는 정보를 말합니다. <strong>비동기 처리</strong>는 위치나 서버 응답이 끝날 때까지 화면 전체를 멈추지 않고 기다리는 방식입니다. 이때 요청을 시작한 시점과 결과가 돌아온 시점이 다르므로, 결과와 처리 상태를 함께 다뤄야 합니다.</p>
+<h2 id="section-02">공통 화면·상태 관리·데이터 조회에 각각 역할을 줬다</h2>
+<p>이력서에 기재된 방법은 Flutter 전환, Riverpod을 통한 일정한 방향의 상태 흐름, Repository를 통한 데이터 접근 정리입니다. 다음 표는 그 방법이 해결하려는 요구를 풀어 쓴 것입니다. 당시 여러 기술을 비교해 탈락시킨 기록으로 해석하지 않습니다. <span class="record-ref">전후 흐름과 기여의 근거</span></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>필요한 일</th>
+  <th>사용한 방법과 역할</th>
+  <th>따로 관리해야 할 부분</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Android·iOS에 같은 기능을 제공</td>
+  <td>Flutter로 화면과 동작을 공통 코드에서 개발</td>
+  <td>운영체제별 권한·동작과 실제 기기 검증</td>
+</tr>
+<tr>
+  <td>데이터·조회 상태가 바뀔 때 화면을 갱신</td>
+  <td>Riverpod으로 상태를 관리하고 화면이 필요한 상태를 구독</td>
+  <td>어떤 상태를 바꾸고 어떤 화면이 구독하는지 연결</td>
+</tr>
+<tr>
+  <td>화면마다 데이터 조회 규칙이 흩어지는 것을 줄임</td>
+  <td>Repository를 조회의 창구로 두고 서버·저장본 선택을 맡김</td>
+  <td>저장본의 유효성·갱신 조건·실패 처리</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Riverpod</strong>은 화면이 필요한 상태를 구독하고 그 변화에 반응하도록 연결하는 도구입니다. <strong>Provider</strong>는 그 연결을 제공하는 구성 단위이며, 이 코드에서는 상태를 바꾸는 담당 객체도 함께 둡니다. <strong>Repository</strong>는 화면에서 “날씨를 가져와 달라”처럼 요청할 수 있는 데이터 접근 창구입니다. 정보를 어디서 가져올지와 화면의 대기·성공·실패 상태를 나누면 각 역할을 따라가기 쉬워집니다. 이 장점과 관리 비용은 구조를 풀어 쓴 설명이며, 당시 본인이 대안별 비용을 측정한 결과는 아닙니다.</p>
+<p>단방향 흐름은 이 글에서 <strong>조회 요청 → 상태 변경 → 그 상태를 구독하는 화면의 갱신</strong>이라는 방향을 뜻합니다. 앱 전체에 상태 객체가 하나뿐이라는 의미나 서버와 기기의 모든 정보가 항상 일치한다는 보장은 아닙니다.</p>
+<h2 id="section-03">재직 중 코드에서는 위치 상태와 날씨 화면의 구독이 연결돼 있다</h2>
+<p>2025-08-04의 재직 중 보관본 스냅샷에서 위치 상태는 현재 위치·저장된 위치·조회 중·오류·갱신 중 여부를 따로 보관합니다. 사용할 위치를 고르는 부분은 현재 위치가 있으면 그것을, 없으면 저장된 위치를 선택합니다. <strong>캐시</strong>는 이런 재사용을 위해 보관해 둔 데이터입니다. <span class="record-ref">위치 상태와 선택 규칙</span></p>
+<p>같은 스냅샷의 위치 조회 함수는 강제 갱신이 아닌 요청에서 이미 진행 중인 조회가 있으면 그 결과를 함께 기다립니다. 짧은 시간에 여러 곳에서 위치를 요청하더라도 진행 중인 일을 재사용하는 경로입니다. 강제 갱신에는 다른 조건을 적용하므로 모든 중복 요청을 차단했다고 일반화하지 않습니다. <span class="record-ref">진행 중인 조회 재사용</span></p>
+<p>날씨 화면은 <code>ref.watch</code>로 위치·위치 권한·날씨 캐시 상태를 구독합니다. <code>watch</code>는 해당 정보가 바뀔 때 화면을 다시 구성할 수 있도록 연결하는 호출입니다. 화면은 사용할 위치가 있으면 주소를 표시하고, 위치를 확인하는 중이면 “위치 확인 중...”을 표시합니다. 위치가 없고 조회 중도 아닌 분기에서는 서울특별시 중구를 기본 지역으로 사용합니다. 날씨 데이터와 조회 중 여부도 날씨 캐시 상태에서 읽습니다. <span class="record-ref">재직 중 화면의 상태 구독과 분기</span></p>
+<p>이 코드로 설명할 수 있는 변화는 화면이 필요한 상태를 읽고, 위치 정보의 유무·조회 진행에 따라 표시를 고르는 구조입니다. 저장 위치나 기본 지역을 표시한 것을 새 GPS 위치 확인 성공으로 볼 수는 없습니다. 저장본의 최신성, 권한별 실제 화면, 모든 위치·날씨 조합의 정상 동작은 별도의 실행 확인 대상입니다.</p>
+<h2 id="section-04">후속 보관 코드에서는 조회 담당과 상태 변경 순서가 더 구체적으로 보인다</h2>
+<p>2026-01-11의 후속 보관본 스냅샷에서 날씨 Provider는 Repository에 주소·위도·경도를 전달합니다. 조회 결과가 실패이거나 데이터가 없으면 예외를 만들고, 성공하면 날씨 데이터를 반환합니다. 공통 처리 함수 <code>executeAsync</code>는 작업 전 조회 중 상태를 설정하고, 정상 반환은 성공 상태로, 예외는 오류 상태로 바꿉니다. <span class="record-ref">날씨 조회의 역할 분리</span> · <span class="record-ref">공통 상태 처리</span></p>
+<p>다음은 <strong>위 두 함수의 호출·상태 변경을 요약한 도식</strong>입니다. 앞 절의 2025년 날씨 화면과 합쳐 한 시점의 전체 실행을 관찰한 그림은 아닙니다.</p>
+<figure class="diagram"><div class="diagram-scroll" tabindex="0" role="region" aria-label="가로로 넘겨 읽는 처리 흐름도"><img src="/career-explained/assets/diagrams/seesun-001.svg" alt="조회 담당에 작업을 요청하고, 대기·성공·실패 상태를 바꾸는 보관 코드의 처리 흐름" style="min-width:404px" loading="lazy" decoding="async"></div><figcaption>조회 담당에 작업을 요청하고, 대기·성공·실패 상태를 바꾸는 보관 코드의 처리 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.<span class="diagram-help">옆으로 넘겨 읽거나 <a href="/career-explained/assets/diagrams/seesun-001.svg">도식 크게 보기 ↗</a></span></figcaption></figure>
+<p>다른 예인 재난 문자 Repository는 강제 갱신 요청이 아니면 저장본을 먼저 확인하고, 비어 있지 않으면 반환합니다. 그 외에는 서버에서 조회해 저장·반환합니다. 서버 조회나 응답 저장 중 예외가 나면 마지막 저장본을 반환하려 시도하고, 저장본도 없으면 오류를 다시 전달합니다. 강제 갱신은 처음의 저장본 우선 단계를 건너뛰지만 실패 후 저장본을 읽는 단계까지 없애지는 않습니다. <span class="record-ref">저장본·서버 선택과 실패 처리</span></p>
+<p>이 방식은 서버 응답을 얻지 못했을 때 보관된 정보를 재사용하는 경로를 만듭니다. 보관 정보가 최신이라는 보장은 별개입니다. 실제 재난 문자 화면도 조회 중에는 진행 표시를 보여 주지만, 오류이거나 목록이 비어 있으면 그 영역을 숨깁니다. <strong>상태를 코드에서 구분하는 것과 실패 이유를 사용자에게 알려 주는 것은 서로 다른 확인 대상</strong>입니다. 모든 통신 실패를 안내했다거나 모든 재난 정보를 오프라인에서 제공했다고 설명하지 않습니다. <span class="record-ref">화면의 대기·오류·빈 목록 처리</span></p>
+<h2 id="section-05">본인 역할과 코드 시점을 함께 읽기</h2>
+<p><strong>안전디딤돌·이머전시레디 두 앱의 Flutter 앱 부분 전환은 본인이 단독 수행했습니다.</strong> 이 범위는 2026-10-12 사용자 확인으로 확정돼 있습니다. Riverpod·Repository로 데이터 흐름을 정리했다는 설명은 본인의 기존 이력서 기록이고, 위의 구체적인 처리 순서는 안전디딤돌 코드와 대조한 내용입니다. 서버 등 앱 밖의 업무·퇴사 후 변경·개별 시험·배포까지 본인 단독 수행으로 넓히지 않습니다. AI 활용 여부와 세부 분업도 추가 확인이며 Git 작성자 이름만으로 정하지 않습니다. <span class="record-ref">역할의 사용자 확인</span> · <span class="record-ref">프로젝트의 협업·상태 범위</span></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>근거 시점</th>
+  <th>이번에 직접 읽은 범위</th>
+  <th>설명할 수 있는 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>재직 기간에 포함되는 2025-08-04, 재직 중 보관본</td>
+  <td>위치 상태·진행 중 조회 재사용·날씨 화면 구독</td>
+  <td>이 스냅샷에 보관된 코드 구조. 실제 배포·기기 시험 통과와는 구분</td>
+</tr>
+<tr>
+  <td>퇴사 뒤인 2026-01-11, 후속 보관본</td>
+  <td>날씨 Provider·공통 상태 처리·재난 문자 Repository와 화면</td>
+  <td>후속 보관 코드의 구체적인 역할 분리. 전체를 재직 중 완성·배포한 구조로 소급하지 않음</td>
+</tr>
+</tbody>
+</table></div>
+<p>이번 두 Git 트리 대조에서도 날씨 Provider의 해당 경로와 재난 문자 Repository 구현은 2025년 트리에 포함되지 않고 2026년 트리에는 포함되는 것을 확인했습니다. 이것은 <strong>그 경로의 Git 보관 범위</strong>이며 실제 최초 작성일을 뜻하지 않습니다. 기존 Repository 구현 문서가 완료일을 2025-01-20으로 적은 사실도 그대로 두되, 그 날짜만으로 위 후속 코드 전체의 적용일을 확정하지 않습니다. <span class="record-ref">기존 시점 경계와 문서 날짜</span></p>
+<h2 id="section-06">확인된 결과와 남은 한계</h2>
+<p>확인된 결과는 두 층위로 설명합니다. 첫째, <strong>두 Flutter 앱 전환의 개인 수행은 사용자 확인</strong>이며 단일 코드베이스 전환·상태 흐름 단순화는 기존 이력서에 기재돼 있습니다. 둘째, <strong>상태를 따로 보관하고 화면이 구독하는 구조, 조회를 Repository에 맡기고 대기·성공·실패를 반영하는 경로는 코드에서 직접 확인</strong>했습니다. 이번 작업은 그 자료를 이해할 수 있는 해설로 연결한 것입니다.</p>
+<p>실제 동기화 결함의 전후 재현·해소율, 앱별 전환 완료일·릴리스 버전, 현재 서비스 정상 동작은 이번에 검증하지 않았습니다. 이번 앱 빌드·시험·실기기·배포도 수행하지 않았습니다. 코드 구조의 확인을 결함 완전 해결이나 현재 운영 성과로 바꾸지 않습니다.</p>
+<p>기존 이력서의 효율 2배·버그 30% 감소·개발 속도 20% 향상은 비교 기간·대상·측정 자료가 추가로 필요한 기재값입니다. 이 해설에서는 확정 개선율로 사용하지 않습니다. 접근성 심사 점수와 언어 수 역시 다른 사건의 근거이므로 전환의 성과 수치로 합산하지 않습니다. <span class="record-ref">수치·상태의 확인 경계</span></p>
+<h2 id="section-07">전환과 상태 흐름 이해 확인</h2>
+<ol>
+<li>Android·iOS 화면을 Flutter 공통 코드로 옮겨도 데이터 갱신 문제를 따로 다뤄야 하는 이유는 무엇인가요? <a href="#section-01">문제와 상태의 의미</a></li>
+<li>Provider의 상태 관리와 Repository의 조회 역할은 어떻게 다른가요? 재난 문자 조회가 실패했을 때 저장본이 있거나 없는 경우도 따라가 보세요. <a href="#section-04">처리 순서와 한계</a></li>
+<li>전환을 혼자 수행한 사실, 2025년 코드, 2026년 코드, 실제 배포 결과는 각각 어디까지 확인됐나요? <a href="#section-05">역할과 시점</a> · <a href="#section-06">확인된 결과</a></li>
+</ol>
+<p>위 질문은 본문 이해 확인용입니다. 실제 독자 이해도·자기 설명·면접 효과는 확인하지 않았습니다. 다음은 <a href="/career-explained/disaster-safety/safekorea-accessibility/">안전디딤돌 접근성 심사와 개선 과정</a>입니다.</p>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/calendar-qa/printed-error-comparison/"><span>← 이전 해설</span><strong>검출한 오류를 실제 인쇄물·수정본과 대조하기</strong></a><a href="/career-explained/disaster-safety/safekorea-accessibility/"><span>다음 해설 →</span><strong>재난 정보를 읽고 조작하는 접근성 보완하기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">재난 정보를 보는 사람에게 필요한 화면</a></li><li><a href="#section-01">전환 중 문제는 데이터를 받은 뒤 화면을 맞추는 일이었다</a></li><li><a href="#section-02">공통 화면·상태 관리·데이터 조회에 각각 역할을 줬다</a></li><li><a href="#section-03">재직 중 코드에서는 위치 상태와 날씨 화면의 구독이 연결돼 있다</a></li><li><a href="#section-04">후속 보관 코드에서는 조회 담당과 상태 변경 순서가 더 구체적으로 보인다</a></li><li><a href="#section-05">본인 역할과 코드 시점을 함께 읽기</a></li><li><a href="#section-06">확인된 결과와 남은 한계</a></li><li><a href="#section-07">전환과 상태 흐름 이해 확인</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>
