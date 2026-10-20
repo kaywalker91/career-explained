@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Kay 경력 해설집</title>
+  <rect width="64" height="64" rx="14" fill="#305f4c"/>
+  <path d="M18 16v32m23-32L19 34m8-7 14 21" fill="none" stroke="#fffefa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="50" cy="48" r="4" fill="#c4d7bd"/>
+</svg>
