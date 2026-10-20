@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="제출하기 전에 쓰던 글도 남아 있어야 했습니다. 초안을 보관하는 시점부터 재실행 후 복원, 사진과 삭제 처리까지 설명합니다.">
+  <title>쓰던 일기를 다시 이어 쓰게 하기 · Kay 경력 해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/" aria-current="page">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/" aria-current="page">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / MindLog</p>
+  <p class="eyebrow">임시저장 · 복원 순서</p>
+  <h1>쓰던 일기를 다시 이어 쓰게 하기</h1>
+  <p class="lede">제출하기 전에 쓰던 글도 남아 있어야 했습니다. 초안을 보관하는 시점부터 재실행 후 복원, 사진과 삭제 처리까지 설명합니다.</p>
+  <p class="reading-meta"><span>MINDLOG-001</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>기술 설명의 기준은 <a href="https://github.com/kaywalker91/MindLog/commit/3b536bbc2833dae9507b9e86575cec1c45e08ccd">MindLog 커밋 <code>3b536bb</code></a>, 저장소 버전 <code>1.4.64+72</code>입니다. 이 사건은 2026-08-27~28의 후속 변경이며, 이력서의 2025.12~2026.03을 개발 종료 시점으로 사용하지 않습니다. 이번에는 기준 버전의 명세·코드·테스트 정의·보관 기록을 다시 읽었습니다. 앱·Flutter 시험·스토어를 재실행한 결과는 아니며, 사용자 확인과 현재 공개 빌드의 세부 조건을 구분합니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인 기여와 Claude 공동 작성, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">MindLog에서 일기를 쓰고 분석하는 과정</a></li><li><a href="#section-01">제출 뒤 저장으로는 작성 중인 글을 지킬 수 없었다</a></li><li><a href="#section-02">입력 중에는 잠시 기다리고 떠날 때는 바로 저장하기</a></li><li><a href="#section-03">다시 들어올 때 빈 화면이 기존 초안을 덮지 않게 하기</a></li><li><a href="#section-04">저장과 삭제가 엇갈려 지운 초안이 되살아나지 않게 하기</a></li><li><a href="#section-05">사진은 경로와 파일을 함께 보관해야 했다</a></li><li><a href="#section-06">분석 결과와 사용자 동작에 따라 유지·폐기를 나누기</a></li><li><a href="#section-07">본인이 맡은 범위와 AI 협업</a></li><li><a href="#section-08">확인된 결과와 검증의 범위</a></li><li><a href="#section-09">이해 확인</a></li></ol></details>
+  <h2 id="context">MindLog에서 일기를 쓰고 분석하는 과정</h2>
+<p>MindLog는 일기를 쓰면 AI가 감정 상태와 위로 메시지·행동 제안을 돌려주는 모바일 앱입니다. 사용자는 글을 쓰고 날짜·사진을 고른 뒤 분석을 요청하고, 저장된 일기와 감정 기록을 다시 볼 수 있습니다. Flutter는 모바일 화면을 만들고, Riverpod은 조회·분석 같은 처리 상태를 화면에 연결합니다. 완성된 일기는 기기 안의 데이터베이스인 SQLite에 저장하며, AI 분석 요청은 외부 서비스인 Groq로 전송합니다. <span class="record-ref">서비스·기술의 근거</span></p>
+<p>이 사건에서는 <strong>화면에 입력된 내용과 앱을 다시 열어도 남는 저장 내용이 다르다</strong>는 점이 중요합니다. 입력란에 글이 보여도 기기에 기록하기 전에 앱이 종료되면 다시 불러올 수 없습니다. 임시저장, 즉 초안 보관은 분석을 요청하기 전의 글·날짜·사진 선택을 이어 쓰게 하는 별도 경로입니다.</p>
+<h2 id="section-01">제출 뒤 저장으로는 작성 중인 글을 지킬 수 없었다</h2>
+<p>일기를 쓰다가 다른 앱을 보거나 뒤로가기를 눌렀다고 생각해 봅시다. 이 상황은 문제를 이해하기 위한 사용 예시입니다. 변경 전에는 분석을 위해 제출한 뒤에야 일기를 분석 대기 상태인 <code>pending</code>으로 저장했습니다. 그전에 작성 화면을 나가거나 운영체제가 앱을 종료하면 쓰던 글과 사진 선택을 잃을 수 있었습니다. 제출 이후의 저장이 있어도 사용자가 글을 쓰는 동안은 보호하지 못했던 것입니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/CHANGELOG.md#L10-L36">당시 문제와 변경 기록</a></p>
+<p>해결해야 할 범위는 제출 전 초안 한 건이었습니다. 그래서 작은 데이터를 기기에 보관하는 SharedPreferences에 본문·작성 날짜·마지막 저장 시각·사진 경로를 묶어 저장했습니다. JSON은 이 항목들을 하나의 문자열로 표현하는 형식입니다. 기존 일기 DB에 초안용 표를 추가하고 저장 구조를 바꾸는 비용을 피하려는 선택이 당시 기록과 <a href="https://github.com/kaywalker91/MindLog/commit/ab0f6f47bb841eafed2f3154243a4b1096c3e363">저장 구현 커밋</a>에 남아 있습니다. 여러 초안을 쌓아 두는 기능이나 초안의 암호화·잠금번호 보호까지 제공하는 선택은 아닙니다. <span class="record-ref">선택 근거와 범위</span></p>
+<p>제출할 때의 최소 10자 조건도 초안에는 적용하지 않았습니다. 예를 들어 9자만 쓰고 떠나도 그 글은 보관할 필요가 있기 때문입니다. 본문 앞뒤의 공백을 정리한 뒤 글과 사진이 모두 비면 기존 초안을 지우고, 사진만 있으면 사진 경로를 포함해 보관합니다. 날짜만 고른 빈 폼은 초안으로 남기지 않습니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/domain/usecases/save_diary_draft_usecase.dart">초안 저장 조건</a></p>
+<h2 id="section-02">입력 중에는 잠시 기다리고 떠날 때는 바로 저장하기</h2>
+<p>글자 하나를 칠 때마다 기기에 쓰는 대신, 입력이 <strong>800ms, 즉 0.8초 동안 멈추면</strong> 저장하도록 했습니다. 이를 디바운스라고 합니다. 새 글자가 들어오면 앞서 잡은 대기를 취소하고 다시 기다려, 연속 입력 중의 쓰기 요청을 줄이는 방식입니다. 0.8초는 설정한 대기시간이며 측정한 성능 개선율이 아닙니다.</p>
+<p>그 대기만 사용하면 입력 직후 떠나는 경우를 놓칩니다. 따라서 화면 이탈이나 앱이 뒤로 가는 전환에서는 대기를 건너뛰고 현재 값을 저장하도록 연결했습니다. 코드의 <code>flush</code>는 이 즉시 저장 요청을 뜻합니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>사용자 동작</th>
+  <th>저장 처리와 이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>본문을 계속 입력</td>
+  <td>마지막 입력 뒤 0.8초를 기다려 저장. 입력할 때마다 기기에 쓰는 부담을 줄임</td>
+</tr>
+<tr>
+  <td>날짜 변경·사진 추가 또는 제거</td>
+  <td>바뀐 본문·날짜·사진 경로를 바로 저장 요청</td>
+</tr>
+<tr>
+  <td>뒤로가기</td>
+  <td><code>PopScope</code>로 나가는 동작을 받아 저장 처리가 끝난 뒤 화면을 닫음. 처리 중 중복 뒤로가기를 막음</td>
+</tr>
+<tr>
+  <td>앱을 뒤로 보내거나 숨김</td>
+  <td><code>AppLifecycleListener</code>의 <code>onPause</code>·<code>onHide</code>에서 대기 없이 저장 요청</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>PopScope</code>는 화면을 나가려는 동작을 받는 장치이고, <code>AppLifecycleListener</code>는 앱이 앞에 보이는지 뒤로 갔는지를 받는 장치입니다. 둘을 통해 입력 타이머와 실제 사용자의 이탈 시점을 연결했습니다. 다만 <strong>저장을 요청하는 것과 운영체제가 강제로 종료하기 전에 저장이 완료되는 것은 다릅니다.</strong> 모든 종료 조건의 무손실 보장으로 설명하지 않습니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/docs/spec.md#L59-L85">저장 시점 명세</a>, <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/presentation/screens/diary_screen.dart#L73-L286">화면 연결 코드</a></p>
+<h2 id="section-03">다시 들어올 때 빈 화면이 기존 초안을 덮지 않게 하기</h2>
+<p>변경 후 기본 동선은 다음과 같습니다. 아래 도식은 기준 코드의 정상적인 보관·복원 흐름이며, 저장 실패·강제 종료까지 성공을 보장하는 그림은 아닙니다.</p>
+<figure class="diagram"><img src="/career-explained/assets/diagrams/mindlog-001.svg" alt="작성 중 초안을 보관하고, 재실행 시 초안 조회 중 저장을 잠근 뒤 입력을 복원하는 처리 흐름" loading="lazy" decoding="async"><figcaption>작성 중 초안을 보관하고, 재실행 시 초안 조회 중 저장을 잠근 뒤 입력을 복원하는 처리 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.</figcaption></figure>
+<p>작성 화면에 처음 들어오면 입력란은 비어 있고, 기존 초안은 기기에서 읽어 오는 중입니다. 이때 빈 입력란을 먼저 저장하면 앞서 보관한 초안이 지워질 수 있습니다. 그래서 <code>DiaryDraftController</code>, 즉 초안 복원·저장을 관리하는 코드가 <strong>조회 중에는 저장을 잠그고 조회가 끝난 뒤에 허용</strong>합니다. 이 잠금은 입력란을 못 쓰게 막는 기능이 아니라 저장 요청을 막는 처리입니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/presentation/providers/diary_draft_controller.dart#L32-L174">복원과 저장 잠금 구현</a></p>
+<p>복원할 초안이 있으면 본문·날짜·사진 경로를 입력 화면에 반영하고 복원 안내 배너를 보여 줍니다. 날짜가 화면에 들어온 날보다 미래라면 그날로 조정합니다. 복원 조회가 실패한 경우에는 실패를 기록하고 ‘초안 없음’ 상태로 전환해, 이후 새 입력의 자동저장이 계속 잠기지 않도록 했습니다. 이것이 기존 초안 복원 성공을 뜻하는 것은 아닙니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/presentation/screens/diary_screen.dart#L238-L286">화면 반영</a></p>
+<p>여기에는 남은 결함도 있습니다. <strong>기존 초안을 지키는 잠금만으로 복원 중 새로 친 글까지 보호되지는 않습니다.</strong> 기준 코드에서는 조회 중에도 입력란에 글을 쓸 수 있고, 뒤늦게 도착한 기존 초안을 입력란에 통째로 반영하므로 그 사이의 새 글이 덮일 수 있습니다. ‘기기에 있던 초안은 남는다’와 ‘사용자의 새 입력이 보존된다’를 구분해야 합니다. 당시 문서의 <code>&lt;50ms</code>는 이번에 측정한 값이 아니며, 현재 공개 빌드의 재현 결과로도 사용하지 않습니다. <span class="record-ref">남은 입력 경합의 근거</span></p>
+<h2 id="section-04">저장과 삭제가 엇갈려 지운 초안이 되살아나지 않게 하기</h2>
+<p>자동저장을 넣으면 사용자가 글을 바꾸거나 지울 때 이미 기다리던 요청이 남을 수 있습니다. 예를 들어 저장 요청 뒤에 삭제를 했는데, 앞선 저장이 더 늦게 끝나면 지운 초안이 다시 생길 위험이 있습니다. 이는 처리 요청과 완료 시점이 어긋나는 순서 문제입니다.</p>
+<p>기준 컨트롤러는 두 가지를 함께 사용합니다. 첫째, <code>_operationTail</code>은 저장·폐기 작업을 한 줄로 이어 앞선 작업이 끝난 뒤 다음 작업을 실행합니다. 이미 시작한 저장이 있다면 폐기가 그 뒤에 오게 합니다. 둘째, <code>_revision</code>은 변경마다 붙이는 순번입니다. 아직 실행 전인 오래된 저장은 최신 순번과 다르면 건너뜁니다. 폐기할 때에는 입력 타이머를 취소하고 순번을 바꾸며, 폐기 중 새 저장도 막습니다. 작업의 실행 순서와 요청의 유효성을 함께 다루는 것입니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/presentation/providers/diary_draft_controller.dart#L66-L190">저장·폐기 순서 구현</a></p>
+<p>이 순번은 복원 중 입력 덮임까지 해결하는 장치는 아닙니다. 복원 중에는 새 입력의 저장 요청 자체를 받지 않으므로 앞 절의 한계가 남습니다. 서로 다른 문제를 같은 ‘입력 보호 완료’로 묶지 않습니다.</p>
+<h2 id="section-05">사진은 경로와 파일을 함께 보관해야 했다</h2>
+<p>초안에 사진의 위치인 경로를 적는 것만으로 사진이 보존되지는 않습니다. 사진 선택기가 돌려준 파일은 운영체제의 임시 보관 공간에 있어, 다음 실행 때 사라질 수 있기 때문입니다. 그래서 사진을 고르면 앱의 <code>__draft__</code> 폴더로 복사하고, 그 복사본 경로를 초안에 넣도록 했습니다. 사진 파일은 폴더에, 그 위치는 SharedPreferences의 초안에 저장하는 두 부분이 이어져야 복원할 수 있습니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/presentation/screens/diary_screen.dart#L165-L222">사진 복사·제거 코드</a></p>
+<p>후속 변경에서는 사진을 지웠다가 다시 넣을 때 파일명이 겹치는 문제도 다뤘습니다. 현재 사진 개수로 다음 파일 번호를 정하면 삭제 뒤 번호를 재사용해 남아 있는 사진을 덮을 수 있습니다. 번호를 계속 증가시키고, 복원 후에도 기존 파일의 가장 큰 번호 다음부터 이어 쓰도록 보완했습니다. 초안 사진을 제거할 때는 앱의 초안 복사본을 정리하고, 복사 실패 때 대신 사용한 원래 경로의 파일은 지우지 않도록 구분했습니다. <a href="https://github.com/kaywalker91/MindLog/commit/ecbef5750098b2907eced9df0d931d5ea9ea62c8">이미지 후속 수정</a></p>
+<p>복사가 실패하면 원래 경로로 계속 진행하므로 그 경우까지 장기 보관을 보장하지는 않습니다. 복사 직후 화면이 닫히면 초안에서 참조하지 않는 파일이 남을 가능성도 기준 명세에 남아 있습니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/docs/spec.md#L70-L85">사진 보관·정리의 범위</a></p>
+<h2 id="section-06">분석 결과와 사용자 동작에 따라 유지·폐기를 나누기</h2>
+<p>초안을 너무 일찍 지우면 분석에 실패했을 때 다시 쓸 수 없고, 계속 남기면 끝낸 글이 다음 작성 때 다시 나타납니다. 따라서 저장뿐 아니라 언제 유지하고 언제 지울지도 정했습니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>상황</th>
+  <th>기준 코드·명세의 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>AI 분석 오류</td>
+  <td>초안을 유지해 같은 입력으로 재시도</td>
+</tr>
+<tr>
+  <td>분석 성공</td>
+  <td>초안과 초안용 사진 복사본 정리</td>
+</tr>
+<tr>
+  <td>안전차단(<code>SafetyBlocked</code>)</td>
+  <td>초안과 초안용 사진 정리. 명세상 본문을 일기 DB에 저장한 뒤 도달하는 상태이며 일반 분석 오류와 구분</td>
+</tr>
+<tr>
+  <td>복원 배너의 닫기</td>
+  <td>안내만 숨기고 초안과 입력은 유지</td>
+</tr>
+<tr>
+  <td>복원 배너의 삭제</td>
+  <td>초안·초안용 사진을 폐기하고 폼 초기화</td>
+</tr>
+<tr>
+  <td>마지막 저장 뒤 7일 경과</td>
+  <td>다음 초안 조회 때 만료를 판정해 초안 데이터를 지우고 복원하지 않음</td>
+</tr>
+</tbody>
+</table></div>
+<p>7일은 보관 기한(TTL) 설정이며 매일 파일을 청소하는 작업이 아닙니다. 앱에서 초안을 조회하지 않으면 만료된 데이터가 저장소에 남을 수 있습니다. 또한 기준 구현의 만료 처리는 초안 데이터만 지우므로 사진 파일이 즉시 정리되지는 않는 한계가 있습니다. <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/docs/spec.md#L59-L85">유지·폐기 명세</a>, <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/lib/domain/usecases/get_diary_draft_usecase.dart">만료 조회 코드</a></p>
+<p>초안은 암호화되지 않은 SharedPreferences의 한 항목에 저장되며 PIN, 즉 잠금번호 보호 대상도 아닙니다. 완성된 비밀 일기의 잠금 기능과 같은 보호를 제공한다고 설명하지 않습니다. <span class="record-ref">초안 보호의 한계</span></p>
+<h2 id="section-07">본인이 맡은 범위와 AI 협업</h2>
+<p>2026-10-08 사용자는 임시저장·복원 사례의 <strong>기획·설계·구현 모두 본인이 담당했다</strong>고 확인했습니다. 저장소에서 확인한 변경은 초안 데이터와 저장 기능, 저장·복원 순서 관리, 작성 화면·배너·사진 처리와 관련 시험 정의로 이어집니다. 본인 담당 확인과 이 구현 범위를 연결하되, 모든 코드를 혼자 손으로 작성했다는 뜻으로 바꾸지 않습니다. <span class="record-ref">U-MINDLOG-001</span>, <span class="record-ref">관련 커밋</span></p>
+<p>구현 커밋의 Claude 공동 작성 표기도 유지합니다. 사용자는 AI 세부 분업을 미확인으로 답했으므로 코드·시험을 누가 각각 작성했는지 임의로 나누지 않습니다. 테스트 실행·실기기 확인·업로드의 개별 담당도 추가 확인입니다. <span class="record-ref">U-MINDLOG-002</span></p>
+<h2 id="section-08">확인된 결과와 검증의 범위</h2>
+<p>확인된 구현 변화는 <strong>제출 후에만 보관하던 흐름에 작성 중 본문·날짜·사진의 저장·복원 경로를 더한 것</strong>입니다. 실제 사용과 당시 시험, 이번 문서 대조는 다음처럼 구분합니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>근거 종류</th>
+  <th>확인한 결과와 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>이번 기준 코드·명세 대조</td>
+  <td>초안 한 건 보관, 입력 대기·이탈 저장, 복원 중 저장 잠금, 저장·폐기 순서, 사진 복사와 유지·폐기 분기를 다시 읽음. 앱 실행 결과와 구분</td>
+</tr>
+<tr>
+  <td>이번 테스트 정의 대조</td>
+  <td>799/800ms 경계, 복원 중 저장 잠금, 저장·폐기 순서와 복원 실패 후 저장을 검사하는 컨트롤러 시험, 과거 날짜·실제 이미지·입력 후 200ms 이내 백그라운드 저장을 검사하는 화면 시험, 7일 만료 경계 정의를 확인. 이번 시험 통과를 뜻하지 않음</td>
+</tr>
+<tr>
+  <td>당시 시험·배포 기록</td>
+  <td>v1.4.64 변경 기록의 <strong>전체 Flutter 테스트 1,814건 통과·에뮬레이터 검증 7종</strong>, 보관 인계의 <strong>Play Internal 업로드 성공</strong>. 초안 기능만의 시험 수나 현재 공개 빌드의 독립 검증으로 사용하지 않음</td>
+</tr>
+<tr>
+  <td>2026-10-08 사용자 확인</td>
+  <td>기획·설계·구현 본인 담당, Play 스토어 출시 완료, 개발·유지보수 진행 및 본인 사용</td>
+</tr>
+<tr>
+  <td>2026-10-16 사용자 확인</td>
+  <td><strong>작성→이탈→재실행→복원이 잘 동작함</strong>. 기본 동선은 확인 대기로 되돌리지 않음. <strong>현재 어머니도 앱을 잘 사용 중</strong>이라는 전언은 본인 외 실제 사용 사례로 보존하며 어머니가 복원 동선을 직접 시험했다는 뜻으로 확대하지 않음</td>
+</tr>
+</tbody>
+</table></div>
+<p>시험 정의는 <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/test/presentation/providers/diary_draft_controller_test.dart">컨트롤러 테스트</a>, <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/test/presentation/screens/diary_draft_flow_test.dart#L195-L381">화면 흐름 테스트</a>, <a href="https://github.com/kaywalker91/MindLog/blob/3b536bbc2833dae9507b9e86575cec1c45e08ccd/test/domain/usecases/get_diary_draft_usecase_test.dart">만료 테스트</a>와 대조했습니다. 후속 <a href="https://github.com/kaywalker91/MindLog/commit/62affc49c0aa1cd0817c5d01213e9ec02f60deee">시험 보강 커밋</a>은 기본 날짜가 이미 오늘이라 날짜 복원 코드를 지워도 통과하던 공백을 과거 날짜 시험으로 보완하고, 실제 이미지 복원·대기시간 전 백그라운드 전환 등의 검사를 추가한 기록입니다. 해당 변경과 시험 정의를 확인한 것이며, 구현 일부를 제거해 시험이 실패하는지 이번에 재현하지 않았습니다. 당시 실행·업로드는 <span class="record-ref">MLOG-D06</span>, 실제 사용은 <span class="record-ref">U-MINDLOG-001</span>·<span class="record-ref">002</span>·<span class="record-ref">003</span>이 근거입니다.</p>
+<p>기준 코드에는 복원 중 새 입력 덮임, 만료·복사 직후 이탈 때 남을 수 있는 사진, 초안의 PIN 보호 제외가 남아 있습니다. 이 한계의 현재 공개 빌드 적용 여부, 사용 빌드·기기와 날짜·사진·강제 종료 등 개별 조건의 결과, 사용자 유실률·정량 효과는 추가 확인입니다. 기본 복원 정상 동작과 어머니 사용의 사용자 확인을 이 세부 정보 부족 때문에 취소하지 않습니다. 이번 앱 재실행·실제 독자 이해도·면접 효과는 확인하지 않았습니다. <span class="record-ref">결과와 남은 한계</span></p>
+<h2 id="section-09">이해 확인</h2>
+<ol>
+<li>제출한 일기를 저장하고 있었는데도 작성 중 임시저장이 필요했던 이유는 무엇인가요? 입력을 잠시 기다렸다 저장하는 방법만으로 부족한 이유도 연결해 보세요. <a href="#section-01">문제와 보관 선택</a> · <a href="#section-02">저장 시점</a></li>
+<li>복원 중 저장 잠금과 저장·폐기 순서 관리는 각각 무엇을 지키나요? 그 두 처리가 있어도 복원 중 새 글이 덮일 수 있는 이유는 무엇인가요? <a href="#section-03">복원과 입력의 차이</a> · <a href="#section-04">저장·폐기 순서</a></li>
+<li>사진 경로만 저장하면 왜 부족하고, 분석 실패·배너 닫기·초안 삭제는 왜 다르게 처리하나요? <a href="#section-05">사진 보관</a> · <a href="#section-06">유지·폐기 조건</a></li>
+</ol>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/linknote/collection-picker/"><span>← 이전 해설</span><strong>있는데도 비어 보이는 목록 바로잡기</strong></a><a href="/career-explained/"><span>다음 해설 →</span><strong>모든 해설로 돌아가기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">MindLog에서 일기를 쓰고 분석하는 과정</a></li><li><a href="#section-01">제출 뒤 저장으로는 작성 중인 글을 지킬 수 없었다</a></li><li><a href="#section-02">입력 중에는 잠시 기다리고 떠날 때는 바로 저장하기</a></li><li><a href="#section-03">다시 들어올 때 빈 화면이 기존 초안을 덮지 않게 하기</a></li><li><a href="#section-04">저장과 삭제가 엇갈려 지운 초안이 되살아나지 않게 하기</a></li><li><a href="#section-05">사진은 경로와 파일을 함께 보관해야 했다</a></li><li><a href="#section-06">분석 결과와 사용자 동작에 따라 유지·폐기를 나누기</a></li><li><a href="#section-07">본인이 맡은 범위와 AI 협업</a></li><li><a href="#section-08">확인된 결과와 검증의 범위</a></li><li><a href="#section-09">이해 확인</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>

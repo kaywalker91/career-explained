@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="앱은 열렸는데 저장할 주소가 보이지 않았습니다. 주소를 지우는 시점과 화면 이동 순서를 바로잡은 과정을 살펴봅니다.">
+  <title>공유한 링크를 저장 화면까지 이어 주기 · Kay 경력 해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/" aria-current="page">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <main id="content" tabindex="-1">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><a class="menu-event" href="/career-explained/linknote/share-recovery/" aria-current="page">LinkNote<br>공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">LinkNote<br>있는데도 비어 보이는 목록 바로잡기</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">MindLog<br>쓰던 일기를 다시 이어 쓰게 하기</a></nav></details>
+      <header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / LinkNote</p>
+  <p class="eyebrow">화면 이동 · 입력 보호</p>
+  <h1>공유한 링크를 저장 화면까지 이어 주기</h1>
+  <p class="lede">앱은 열렸는데 저장할 주소가 보이지 않았습니다. 주소를 지우는 시점과 화면 이동 순서를 바로잡은 과정을 살펴봅니다.</p>
+  <p class="reading-meta"><span>LINKNOTE-001</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-20</span></p>
+</header>
+<div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>기술 설명의 기준은 <a href="https://github.com/kaywalker91/LinkNote/commit/8805eca463e0f4aa495adc11b1d2a1ac42d2388f">LinkNote 커밋 <code>8805eca</code></a>입니다. 이 버전의 코드와 당시 기록, 2026-10-08의 사용자 확인을 구분해 설명합니다. 이번 작성에서 앱·시험·스토어를 재실행하거나 현재 설치 버전을 확인하지 않았습니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인 기여와 Claude 공동 작성, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">LinkNote에서 링크를 저장하고 분류하는 과정</a></li><li><a href="#section-01">앱은 열렸는데 저장할 주소가 이어지지 않았다</a></li><li><a href="#section-02">공유 수신과 로그인 확인 사이에 주소를 보관하는 이유</a></li><li><a href="#section-03">처음의 데이터 형식 가설에서 URL을 지우는 시점으로 원인을 좁히기</a></li><li><a href="#section-04">입력 화면에 도착한 뒤 정리하고 내용을 채우기</a></li><li><a href="#section-05">사용자가 저장한 뒤 돌아갈 화면까지 처리하기</a></li><li><a href="#section-06">URL 복구에서 본인이 맡은 범위와 AI 협업</a></li><li><a href="#section-07">URL 복구의 확인된 결과와 남은 한계</a></li><li><a href="#section-08">URL 복구 원리를 자기 말로 확인하기</a></li></ol></details>
+  <h2 id="context">LinkNote에서 링크를 저장하고 분류하는 과정</h2>
+<p>LinkNote는 다른 앱에서 발견한 웹 링크를 저장해 나중에 찾아보는 모바일 북마크 앱입니다. 링크와 함께 제목·설명 등을 보관하고, 관련 링크를 컬렉션이나 태그로 묶어 정리합니다. <strong>컬렉션은 링크를 모으는 분류이고, 컬렉션 피커는 그 분류를 고르는 선택 창</strong>입니다. 화면은 Flutter로 만들고, Riverpod은 조회 상태와 화면을 연결합니다. 이 사례에서 필요한 것은 화면을 그리는 일과 데이터가 도착하는 일이 서로 다른 시점에 일어난다는 점입니다. <span class="record-ref">서비스·기술의 근거</span></p>
+<h2 id="section-01">앱은 열렸는데 저장할 주소가 이어지지 않았다</h2>
+<p>YouTube에서 나중에 볼 영상을 발견해 공유 메뉴의 LinkNote를 골랐다고 생각해 봅시다. 기대한 동작은 영상 주소가 들어 있는 링크 추가 화면을 열고, 내용을 확인한 사용자가 저장하는 것입니다. 공유만으로 자동 저장하는 기능은 제품 요구에서 제외했습니다. <strong>외부 앱에서 주소를 받는 일, 입력 화면을 여는 일, 링크를 저장하는 일은 각각 다른 단계</strong>입니다. 앱이 열렸다는 사실만으로 저장 경로가 이어졌다고 볼 수 없습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/prds/share-intent.md#L9-L48">공유 기능 요구사항</a></p>
+<p>2026-07-22의 사건 기록에서는 로그인된 상태로 YouTube에서 공유하면 LinkNote로 전환되지만, URL이 채워진 링크 추가 화면이 열리지 않았습니다. 콘텐츠를 발견한 순간 저장하는 핵심 진입 경로가 끊긴 문제였습니다. 당시에는 케이블 없이 Play 내부테스트 빌드로 확인했고, 먼저 전달한 +5·+6 빌드에서도 같은 증상이 남았습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/handoffs/2026-07-22-share-intent-youtube.md#L23-L100">증상과 실패한 빌드 기록</a></p>
+<p>이 작업은 04-21의 앱 종료 상태 공유 수신과 06-20의 실행 중 수신 추가에 이은 복구입니다. 07-22에 공유 기능 전체를 처음 만들었다는 의미로 사용하지 않습니다. <span class="record-ref">원본 사건과 작업 시점</span></p>
+<h2 id="section-02">공유 수신과 로그인 확인 사이에 주소를 보관하는 이유</h2>
+<p>다른 앱의 공유 요청을 받는 연결 도구가 <code>receive_sharing_intent</code>입니다. 앱이 꺼져 있었다면 시작 과정에서 첫 공유 내용을 읽고, 이미 실행 중이라면 이후 도착하는 공유 알림을 받습니다. 이를 코드와 기록에서는 각각 cold·warm 경로라고 부릅니다. 로그인된 계정이 기기에 남아 있어도, 앱을 새로 시작할 때에는 로그인 상태를 확인하는 시간이 필요합니다.</p>
+<p>GoRouter는 현재 로그인 상태와 화면에 따라 다음 목적지를 정하는 화면 이동 도구입니다. 아직 로그인 확인 중이면 시작 화면에서 기다리고, 미로그인이면 로그인 화면으로 보냅니다. 이 확인을 기다리는 동안에도 공유 주소를 잃지 않도록 <strong>대기 URL 상태(<code>pendingSharedUrlProvider</code>)에 주소를 보관</strong>합니다. Riverpod은 이 상태를 앱 안에서 읽고 바꿀 수 있도록 연결합니다. 대기 URL은 서버에 저장한 북마크가 아니라, 입력 화면에 전달할 때까지 메모리에 남겨 두는 한 건의 주소입니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>공유를 받은 상황</th>
+  <th>기준 코드의 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>앱이 꺼져 있다가 공유로 시작</td>
+  <td>시작 과정에서 URL을 읽어 대기 상태에 넣고, 로그인 확인 후 입력 화면으로 전달</td>
+</tr>
+<tr>
+  <td>실행 중이며 미로그인</td>
+  <td>같은 대기 상태에 넣고 로그인 뒤 이어서 처리</td>
+</tr>
+<tr>
+  <td>실행 중이며 로그인됨·작성 중인 폼 없음</td>
+  <td>URL을 담아 링크 추가 화면을 바로 열기</td>
+</tr>
+<tr>
+  <td>실행 중이며 로그인됨·폼 작성 중</td>
+  <td>기존 폼을 곧바로 바꾸지 않고 ‘공유한 링크를 받았어요’와 ‘열기’ 동작 안내</td>
+</tr>
+</tbody>
+</table></div>
+<p>작성 중인 폼은 링크 추가·컬렉션 생성·편집 화면을 포함합니다. 안내의 ‘열기’를 누르면 새 입력 화면을 여는 처리이며, 기존 폼에 공유 내용을 자동으로 합치는 기능은 아닙니다. URL을 찾지 못하면 찾지 못했다는 안내를 보여 줍니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/bootstrap.dart#L52-L103">앱 시작 시 수신</a>, <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/share_intent/presentation/widget/share_intent_listener.dart#L18-L177">실행 중 분기와 입력 보호</a></p>
+<h2 id="section-03">처음의 데이터 형식 가설에서 URL을 지우는 시점으로 원인을 좁히기</h2>
+<p>처음에는 YouTube가 보내는 공유 데이터 형식을 의심했습니다. 공유 연결 도구에서 주소를 읽지 못했을 가능성에 대비해, Android가 전달하는 텍스트 항목인 <code>EXTRA_TEXT</code> 등에서 URL을 추가로 읽는 대체 경로를 넣었습니다. 그러나 +6 내부테스트에서도 같은 문제가 남았습니다. 이 시도는 실제로 수행한 대응이며, 최종 원인을 해결한 방법으로 설명하지 않습니다.</p>
+<p>이후 진단 기록에는 <strong>URL을 정상적으로 읽은 결과인 <code>resolvedUrl</code>까지 확보했다</strong>고 적혀 있습니다. 문제는 그 뒤 목적지를 정하는 과정이었습니다. 로그인 상태 갱신 알림이 여러 번 발생하면서 GoRouter의 <code>redirect</code>, 즉 다음 화면을 정하는 판단도 반복됐습니다. 첫 판단이 대기 URL을 지우고 입력 화면을 목적지로 돌려줬지만, 아직 시작 화면에 있는 다음 판단에서는 대기 URL이 비어 있어 홈으로 보내는 흐름이었습니다. 이를 순서 경쟁이라고 부릅니다. 각각의 처리가 실행돼도 그 순서에 따라 필요한 정보가 먼저 사라지는 문제입니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/handoffs/2026-07-22-share-intent-youtube.md#L1-L19">당시 진단과 해결 기록</a></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>같은 공유에 대한 목적지 판단</th>
+  <th>변경 전</th>
+  <th>변경 후</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>첫 판단</td>
+  <td>대기 URL을 지우고 입력 화면을 목적지로 반환</td>
+  <td>대기 URL을 읽어 입력 화면을 목적지로 반환</td>
+</tr>
+<tr>
+  <td>도착 전 다시 판단</td>
+  <td>URL이 비어 홈으로 보낼 수 있음</td>
+  <td>URL이 남아 있어 같은 입력 화면을 목적지로 반환</td>
+</tr>
+<tr>
+  <td>입력 화면 도착</td>
+  <td>앞선 판단에서 URL이 이미 지워져 도착하지 못할 수 있음</td>
+  <td>전달받은 URL로 화면을 준비하고 대기 URL 정리</td>
+</tr>
+</tbody>
+</table></div>
+<p>선택의 핵심은 <strong>목적지를 정하는 일과 전달 대기 상태를 지우는 일을 분리</strong>한 것입니다. 입력 화면에 도착하기 전에는 주소를 보존하고, 도착한 뒤에는 지워 다음 로그인에서 과거 공유가 다시 열리지 않게 합니다. 대신 URL을 보관하는 상태와 화면 도착 후 정리 시점을 함께 관리해야 합니다. 대체 읽기 경로는 다른 공유 형식에 대비한 방어책으로 남겼습니다. 이 선택 설명은 당시 진단과 변경 기록에 근거하며, 기록에 없는 다른 설계 대안의 비교를 만들지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/app/router/app_router.dart#L72-L99">기준 코드의 공유 URL 판단 분기</a></p>
+<h2 id="section-04">입력 화면에 도착한 뒤 정리하고 내용을 채우기</h2>
+<p>아래는 대기 URL을 사용하는 앱 시작·미로그인 공유 경로의 변경 후 흐름입니다. 실행 중 로그인된 사용자가 바로 입력 화면을 여는 경우에는 앞 표처럼 대기 상태를 거치지 않고 URL을 전달합니다.</p>
+<figure class="diagram"><img src="/career-explained/assets/diagrams/linknote-001.svg" alt="공유 주소를 보관하고 로그인 확인 후 입력 화면에 전달한 뒤, 사용자가 저장하고 복귀하는 처리 흐름" loading="lazy" decoding="async"><figcaption>공유 주소를 보관하고 로그인 확인 후 입력 화면에 전달한 뒤, 사용자가 저장하고 복귀하는 처리 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.</figcaption></figure>
+<p>처리 순서를 조금 더 풀면 다음과 같습니다.</p>
+<ol>
+<li><strong>URL을 화면에 전달합니다.</strong> 목적지 주소의 <code>prefill</code>이라는 입력값에 URL을 넣습니다. URL 안의 <code>?</code>·<code>&amp;</code> 같은 문자가 목적지 주소의 구분자로 섞이지 않도록 인코딩, 즉 전달용 표현으로 바꿉니다. <code>LinkAddScreen</code>은 전달받은 URL을 자기 입력란에 넣습니다.</li>
+<li><strong>대기 URL을 정리합니다.</strong> 첫 화면 구성이 끝난 뒤 실행하는 <code>addPostFrameCallback</code>에서 <code>consume()</code>을 호출합니다. <code>consume()</code>은 대기값을 비우는 처리입니다. 화면 생성 중에는 Riverpod 상태를 바꾸지 않도록 실행 시점을 뒤로 옮겼습니다. 이때 주소는 이미 화면이 전달받았으므로, 대기값을 지우는 일과 화면의 주소를 지우는 일은 다릅니다. <strong>대기값 정리는 입력 화면 도착을 기준으로 하며 저장 성공을 뜻하지 않습니다.</strong></li>
+<li><strong>입력 상태가 준비된 뒤 링크 정보를 조회합니다.</strong> 화면의 텍스트 입력란과 저장에 사용할 폼 상태는 별도로 준비됩니다. 폼 상태가 아직 준비 중이면 정보 조회 요청이 처리되지 않을 수 있어, 준비 완료를 기다린 뒤 URL을 반영하고 OG를 한 번 조회합니다. OG(Open Graph)는 웹페이지가 제공하는 제목·설명·이미지 정보로, 사용자가 내용을 모두 직접 쓰는 수고를 줄입니다.</li>
+<li><strong>늦은 응답으로 사용자가 쓴 내용을 덮지 않습니다.</strong> 조회를 기다리는 동안 제목 등을 직접 쓸 수 있으므로, 응답이 도착하면 그때의 최신 폼 상태를 다시 읽어 빈 항목만 채웁니다. 예를 들어 사용자가 이미 제목을 썼다면 사이트에서 받은 제목으로 바꾸지 않습니다. 조회에 실패하거나 받은 제목이 비어 있으면, 사용자 제목이 비어 있는 경우에만 <code>youtube.com</code>처럼 URL의 사이트 주소 부분을 임시 제목으로 씁니다. 이 주소는 설명용 예시이며, 실패한 조회 자체가 성공한 것으로 바뀌는 것은 아닙니다.</li>
+</ol>
+<p>화면 도착·준비 대기는 <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/screens/link_add_screen.dart#L34-L61">입력 화면 코드</a>, 빈 항목 채우기·대체 제목은 <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/provider/link_form_provider.dart#L70-L140">폼 처리 코드</a>와 대조했습니다. 대기 상태 파일의 ‘redirect에서 소비’라는 주석은 실제 화면 도착 후 정리 코드와 다릅니다. 해설은 직접 읽은 구현을 따릅니다. <span class="record-ref">주석 불일치의 기존 대조</span></p>
+<h2 id="section-05">사용자가 저장한 뒤 돌아갈 화면까지 처리하기</h2>
+<p>URL만 보이는 화면으로는 작업이 끝나지 않습니다. 기준 폼은 저장할 때 URL과 제목을 확인하므로, 링크 정보 조회와 임시 제목은 사용자가 저장을 이어갈 수 있게 하는 처리이기도 합니다. 사용자가 최종 내용을 확인하고 저장을 누르면 기존 저장 처리를 실행합니다. 공유 수신이나 대기값 정리만으로 서버에 링크를 만들지 않습니다.</p>
+<p>저장이 성공하면 성공 안내를 보여 주고 <code>canPop()</code>으로 돌아갈 이전 화면이 있는지 확인합니다. 이미 실행 중인 앱에서 입력 화면을 새로 열었다면 이전 화면으로 돌아갈 수 있지만, 앱 시작 직후 목적지 전환으로 도착했다면 뒤로 돌아갈 화면이 없을 수 있습니다. 그래서 이전 화면이 있으면 <code>pop()</code>으로 복귀하고, 없으면 <code>go(home)</code>으로 홈을 엽니다. 저장 실패 때에는 이 복귀 분기를 실행하지 않습니다. 입력 화면 진입과 저장, 저장 후 복귀를 나눠 살펴야 하는 이유입니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/screens/link_add_screen.dart#L187-L211">저장 후 복귀 코드</a></p>
+<h2 id="section-06">URL 복구에서 본인이 맡은 범위와 AI 협업</h2>
+<p>2026-10-08 사용자는 이 사건의 <strong>원인 판단·구현·실기기 확인을 모두 본인이 담당했다</strong>고 확인했습니다. 공유 데이터 형식이라는 첫 가설을 시험하고, 진단 결과로 실패 구간을 좁히고, 대기 URL의 정리 시점과 폼·저장 후 복귀를 고친 과정은 이 담당 확인과 원문 기록을 연결해 설명합니다. <span class="record-ref">U-LINKNOTE-001</span></p>
+<p>관련 변경의 Claude 공동 작성 표기는 함께 유지합니다. 본인 담당 확인을 AI 없이 혼자 작성했다는 뜻이나 앱 전체의 단독 수행으로 확대하지 않습니다. 어떤 코드와 시험을 AI가 각각 작성했는지, 최종 수정 빌드 업로드를 누가 실행했는지는 추가 확인입니다. <span class="record-ref">역할·관련 커밋 근거</span></p>
+<h2 id="section-07">URL 복구의 확인된 결과와 남은 한계</h2>
+<p>이번에는 기준 커밋 <code>8805eca</code>의 조사 기록·화면 이동·수신·폼 코드와 화면 시험 정의를 다시 읽었습니다. 공유 URL 판단은 읽기만 하고 화면 도착 후 대기값을 지우는 구현, 폼 준비 대기·입력 보호·저장 후 복귀 분기를 대조했습니다. 당시 실행 결과는 아래처럼 원문 기록으로 구분합니다.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
+<thead>
+<tr>
+  <th>근거의 종류</th>
+  <th>확인된 내용과 해석 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>초기 시도·실패 기록</td>
+  <td>관련 시험 45개 통과와 추가 읽기 경로 적용 뒤에도 YouTube 실기기 실패. 부분 시험 통과만으로 실제 공유 경로 성공을 판정할 수 없었던 사례</td>
+</tr>
+<tr>
+  <td>수정 후 실기기 기록</td>
+  <td>보관 인계 상단에 Android 내부테스트의 <strong>폼 오픈·저장 확인</strong>이 기재됨. 이번 실제 기기에서 재관찰한 결과와 구분</td>
+</tr>
+<tr>
+  <td>수정 머지 기록</td>
+  <td>07-22 머지 <code>af43233</code>에 테스트 674개 통과·코드 분석 문제 0건·배포용 AAB 파일 생성 성공이 기록됨. 당시 시험·빌드 기록이며 현재 성공률이나 공개 배포 증거로 사용하지 않음</td>
+</tr>
+<tr>
+  <td>화면 시험 정의</td>
+  <td>URL 주입·OG 1회 조회·화면 도착 후 대기값 정리를 검사. 입력 화면을 직접 띄우므로 실제 공유 메뉴와 라우터의 반복 판단 전체를 재현하는 시험과 구분</td>
+</tr>
+</tbody>
+</table></div>
+<p>근거: <span class="record-ref">실패·해결·시험 범위 LNOTE-D02~06</span>, <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/test/features/link/presentation/screens/link_add_screen_test.dart#L161-L248">화면 시험 정의</a>, <a href="https://github.com/kaywalker91/LinkNote/commit/af4323361a8d4320cfdbeab767366a8adce70894">수정 머지</a>. 초기 빌드의 실패와 뒤의 해결 기록은 서로 다른 시점이며, 상단의 해결 확인으로 원본 조사 기록을 지우지 않습니다.</p>
+<p>대기 URL은 메모리에 <strong>한 건만</strong> 보관하고 새 URL이 이전 값을 대체합니다. 이 상태를 읽는 화면이 없어도 메모리에 유지하는 설정이 있지만, 프로세스 종료 뒤 주소를 복원하는 영구 저장은 아니며 연속 공유를 모두 쌓아 두는 대기열도 아닙니다. 입력 화면 도착 때 이미 대기값을 지우므로 저장하지 않고 이탈한 경우의 주소 복원까지 이 수정으로 보장하지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/share_intent/presentation/provider/pending_shared_url_provider.dart#L14-L30">대기 상태 구현</a></p>
+<p>같은 라우터의 공개 컬렉션 경로는 여전히 목적지 판단 중 대기 정보를 지워 비슷한 순서 충돌 가능성이 남아 있습니다. 공유 URL 경로의 수정으로 라우터 전체의 위험이 해결됐다고 확대하지 않습니다. YouTube의 폼·저장 확인을 Chrome/X·로그인 여부·앱 종료/실행 중의 전체 조합이나 iOS 공유 성공으로도 확대하지 않습니다. 최종 수정 빌드의 정확한 업로드·현재 설치 빌드·기기·공개 운영과 유실률·저장 성공률 수치는 추가 확인입니다. <span class="record-ref">남은 범위</span></p>
+<h2 id="section-08">URL 복구 원리를 자기 말로 확인하기</h2>
+<ol>
+<li>앱이 열렸고 URL도 정상적으로 읽혔는데, 입력 화면에는 도착하지 못했던 순서를 설명할 수 있나요? <a href="#section-03">반복되는 판단과 원인</a></li>
+<li>대기 URL을 지워도 입력 화면의 URL이 남는 이유와, 그 시점이 저장 완료와 다른 이유를 설명할 수 있나요? 링크 정보가 늦게 와도 사용자 제목을 유지하는 과정도 짚어 보세요. <a href="#section-04">화면 도착·정리·입력 보호</a></li>
+<li>저장 후 무조건 뒤로 가면 안 되는 이유와, 화면 시험·당시 실기기 확인만으로 보장할 수 없는 범위를 구분할 수 있나요? <a href="#section-05">저장과 복귀</a> · <a href="#section-07">결과와 한계</a></li>
+</ol>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/"><span>← 이전 해설</span><strong>모든 해설로 돌아가기</strong></a><a href="/career-explained/linknote/collection-picker/"><span>다음 해설 →</span><strong>있는데도 비어 보이는 목록 바로잡기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">LinkNote에서 링크를 저장하고 분류하는 과정</a></li><li><a href="#section-01">앱은 열렸는데 저장할 주소가 이어지지 않았다</a></li><li><a href="#section-02">공유 수신과 로그인 확인 사이에 주소를 보관하는 이유</a></li><li><a href="#section-03">처음의 데이터 형식 가설에서 URL을 지우는 시점으로 원인을 좁히기</a></li><li><a href="#section-04">입력 화면에 도착한 뒤 정리하고 내용을 채우기</a></li><li><a href="#section-05">사용자가 저장한 뒤 돌아갈 화면까지 처리하기</a></li><li><a href="#section-06">URL 복구에서 본인이 맡은 범위와 AI 협업</a></li><li><a href="#section-07">URL 복구의 확인된 결과와 남은 한계</a></li><li><a href="#section-08">URL 복구 원리를 자기 말로 확인하기</a></li></ol></nav></div>
+    </main>
+  </div>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-20</span></footer>
+</body>
+</html>
