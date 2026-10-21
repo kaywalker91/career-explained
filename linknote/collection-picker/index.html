@@ -40,12 +40,12 @@
   <h2 id="context">LinkNote에서 링크를 저장하고 분류하는 과정</h2>
 <p>LinkNote는 다른 앱에서 발견한 웹 링크를 저장해 나중에 찾아보는 모바일 북마크 앱입니다. 링크와 함께 제목·설명 등을 보관하고, 관련 링크를 컬렉션이나 태그로 묶어 정리합니다. <strong>컬렉션은 링크를 모으는 분류이고, 컬렉션 피커는 그 분류를 고르는 선택 창</strong>입니다. 화면은 Flutter로 만들고, Riverpod은 조회 상태와 화면을 연결합니다. 이 사례에서 필요한 것은 화면을 그리는 일과 데이터가 도착하는 일이 서로 다른 시점에 일어난다는 점입니다. <span class="record-ref">서비스·기술의 근거</span></p>
 <h2 id="section-01">사용자가 겪은 두 가지 불편</h2>
-<p>2026-07-29의 첫 문제는 <strong>컬렉션이 있는데도 홈의 선택 창에는 ‘없음’만 보이는 현상</strong>이었습니다. 컬렉션 탭을 방금 보고 오면 정상이기도 했습니다. 자료가 실제로 사라진 것인지, 아직 불러오지 못한 것인지 사용자는 화면만 보고 판단하기 어려웠고, 원하는 분류를 선택할 수도 없었습니다.</p>
-<p>2026-07-30에는 링크 저장 화면의 불편을 이어 다뤘습니다. 저장 폼, 즉 URL·제목 등을 입력하는 화면에 컬렉션 선택 항목이 없어, 먼저 링크를 저장하고 홈에서 다시 분류를 옮겨야 했습니다. 첫 수정은 선택 창이 목록을 제대로 보여주는 일이고, 다음 수정은 그 창을 추가·편집 화면에서도 사용하게 하는 일이었습니다. <span class="record-ref">사건 기록</span></p>
+<p>저장해 둔 링크를 다른 분류로 옮기려면 홈의 링크 메뉴에서 ‘컬렉션으로 이동’을 누릅니다. 그런데 <strong>컬렉션이 있는데도 선택 창에는 ‘없음’만 보였습니다.</strong> 컬렉션 탭을 보고 돌아오면 목록이 나타나기도 했습니다. 같은 작업인데 앞서 어떤 화면을 봤는지에 따라 원하는 분류를 고를 수 있기도, 없기도 한 문제였습니다. 2026-07-29 기록에 남은 증상입니다.</p>
+<p>저는 목록이 비어 보이는 원인을 분석하고, 화면을 갱신하는 방식을 설계·구현한 뒤 시험과 실기기 확인을 맡았습니다. 다음 날에는 같은 선택 창을 링크 추가·편집 화면에도 연결했습니다. 이 두 변경의 <strong>분석·설계·구현·테스트·실기기 확인을 모두 본인이 담당했다는 내용은 2026-10-08 사용자 확인</strong>입니다. PR #73에는 Claude 공동 작성도 표기돼 있습니다. 본인 담당과 AI 협업을 함께 남기며, 개별 코드·시험의 AI 작성 범위와 업로드 담당은 추가 확인입니다. <span class="record-ref">담당 확인</span> · <span class="record-ref">관련 커밋 대조</span></p>
+<p>두 번째 변경은 링크를 처음 저장하는 순간의 불편을 줄이려는 작업이었습니다. URL·제목 등을 입력하는 저장 폼에 분류 선택 항목이 없어, 먼저 저장한 뒤 홈에서 다시 분류를 옮겨야 했습니다. 따라서 선택 창의 목록을 바로잡는 데서 이어, 사용자가 저장·편집 중에도 그 창을 열 수 있게 했습니다. 창 안에서 새 컬렉션을 만드는 기능은 당시 사용자 결정으로 제외했습니다. <span class="record-ref">사건 기록</span> · <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/daily_task_log/2026-07/2026-07-30_session.md#L36-L44">저장 시 선택 요청과 결정</a></p>
 <h2 id="section-02">목록이 없는 것과 아직 모르는 것은 다르다</h2>
-<p>앱이 서버에 목록을 요청해도 결과가 즉시 도착하지는 않습니다. 결과를 기다리는 동안에도 앱은 선택 창을 열고 다른 화면 처리를 이어갈 수 있습니다. 이렇게 요청과 결과 도착 사이에 다른 처리를 이어가는 방식을 <strong>비동기 처리</strong>라고 합니다. 따라서 선택 창이 열리는 순간에는 ‘조회 중’, ‘조회 실패’, ‘조회 성공’을 구분해야 하고, 성공한 뒤에야 받은 항목이 0개인지 판단할 수 있습니다.</p>
-<p>Riverpod의 <strong>provider</strong>는 이 사례에서 컬렉션 목록과 조회 상태를 화면에 제공하는 연결점입니다. <strong>캐시</strong>는 이미 받은 데이터를 다시 쓸 수 있게 임시로 보관하는 것입니다. 기준 코드의 목록은 사용이 끝나면 해제될 수 있고(<code>autoDispose</code>), 링크를 다른 컬렉션으로 옮긴 뒤에는 분류별 링크 개수를 다시 조회하도록 기존 목록을 무효화합니다(<code>invalidate</code>). 무효화는 저장된 컬렉션을 삭제하는 일이 아니라, 화면에서 쓸 자료를 다시 가져오게 하는 일입니다. <span class="record-ref">LNOTE-C02</span></p>
-<p>변경 전 창은 열릴 때 <code>ref.read</code>로 그 순간의 상태를 한 번 읽었습니다. 그리고 아직 결과가 없거나 실패한 상태도 빈 목록으로 바꿔 그렸습니다. 창이 이후의 상태 변화를 관찰하지 않았으므로, 늦게 결과가 도착해도 이미 열린 창의 목록은 바뀌지 않았습니다. 문제의 핵심은 조회가 느리다는 사실 자체보다 <strong>기다림·실패를 빈 목록으로 합치고 그 뒤의 변화를 화면에 연결하지 않은 것</strong>입니다.</p>
+<p>먼저 선택 창이 목록을 읽는 시점을 살폈습니다. 앱이 서버에 목록을 요청해도 결과가 즉시 도착하지는 않습니다. 응답을 기다리는 동안에도 창은 열릴 수 있습니다. 이처럼 요청을 보낸 뒤 다른 처리를 이어가는 것을 <strong>비동기 처리</strong>라고 합니다. 창이 열렸다는 사실만으로는 목록을 다 받았는지 알 수 없었습니다.</p>
+<p>변경 전 코드는 <code>ref.read</code>로 창을 열 때의 조회 상태를 한 번 읽었습니다. 아직 결과가 없거나 조회에 실패해도 이를 빈 목록으로 바꿔 그렸습니다. 그 뒤 상태가 달라지는지 받는 연결도 없었으므로, 응답이 도착해도 열린 창은 그대로였습니다. <strong>조회 중·실패·정상 빈 목록을 같은 화면으로 만들고, 늦게 온 결과도 반영하지 않는 두 문제가 겹쳤습니다.</strong></p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
 <thead>
 <tr>
@@ -72,15 +72,15 @@
 </tr>
 </tbody>
 </table></div>
-<p>이 진입 순서의 차이는 당시 계획서의 증상·원인 분석입니다. 모든 요청이 실패했다거나 서버의 컬렉션이 삭제됐다는 뜻은 아닙니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/plans/2026-07-29-collection-picker-empty-list-fix.md#L22-L87">당시 원인 코드와 상황표</a></p>
+<p>다른 탭을 보고 왔을 때만 정상이던 이유도 여기서 설명됩니다. Riverpod의 <strong>provider</strong>는 목록과 조회 상태를 화면에 제공하는 연결점입니다. 이미 받은 자료를 임시로 보관하는 캐시가 살아 있으면, 한 번만 읽어도 목록을 얻을 수 있었습니다. 반대로 기준 코드는 목록을 쓰는 화면이 사라지면 상태를 해제할 수 있고(<code>autoDispose</code>), 링크 이동 뒤에는 분류별 개수를 갱신하려고 목록을 다시 조회하게 합니다(<code>invalidate</code>). 이때 창을 열면 아직 응답을 기다리는 상태를 읽을 수 있었습니다. 재조회는 서버의 컬렉션을 지우는 처리가 아닙니다. 이 설명은 당시 계획의 원인 분석과 기준 코드에 근거하며, 모든 조회가 실패했다는 뜻으로 넓히지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/plans/2026-07-29-collection-picker-empty-list-fix.md#L22-L87">당시 원인 코드와 상황표</a> · <span class="record-ref">보관·재조회 근거 LNOTE-C02</span></p>
 <h2 id="section-03">창을 열고 나서도 결과를 받아 화면을 바꾸기</h2>
-<p>수정에서는 창 안에서 <code>ref.watch(collectionListProvider)</code>로 목록 변화를 계속 받게 했습니다. <code>watch</code>는 그 순간의 상태를 읽는 데 더해, 상태가 바뀔 때 이 데이터를 쓰는 화면을 다시 구성하도록 연결합니다. 상태를 담은 <code>AsyncValue</code>의 <code>when</code>은 조회 중·실패·성공에 맞는 화면을 선택합니다. 이 연결은 데이터를 항상 즉시 가져오게 만드는 기능이 아니라, <strong>현재 어떤 상태인지와 나중에 바뀐 결과를 화면에 반영하는 기능</strong>입니다.</p>
+<p>저는 창 안에서 <code>ref.watch(collectionListProvider)</code>로 목록 상태를 계속 받게 바꿨습니다. <code>watch</code>는 현재 값을 읽고, 나중에 그 값이 바뀌면 해당 화면을 다시 그리도록 연결합니다. 이제 창을 열 때 응답이 없어도 기다림을 표시하다가 결과가 오면 목록으로 바꿀 수 있었습니다. 서버 응답을 빠르게 만드는 수정이 아니라, <strong>응답 전후의 화면을 실제 상태에 맞추는 수정</strong>이었습니다.</p>
 <figure class="diagram"><div class="diagram-scroll" tabindex="0" role="region" aria-label="가로로 넘겨 읽는 처리 흐름도"><img src="/career-explained/assets/diagrams/linknote-002.svg" alt="분류 선택 창에서 조회 중·실패·성공을 구분하고, 결과 도착 또는 재시도로 상태를 갱신하는 처리 흐름" style="min-width:496px" loading="lazy" decoding="async"></div><figcaption>분류 선택 창에서 조회 중·실패·성공을 구분하고, 결과 도착 또는 재시도로 상태를 갱신하는 처리 흐름입니다. 구체적인 조건과 한계는 본문을 함께 읽어 주세요.<span class="diagram-help">옆으로 넘겨 읽거나 <a href="/career-explained/assets/diagrams/linknote-002.svg">도식 크게 보기 ↗</a></span></figcaption></figure>
-<p>조회 중에는 돌아가는 진행 표시를 보여 기다리는 상황을 알립니다. 실패하면 ‘컬렉션을 불러오지 못했습니다’와 ‘다시 시도’를 보여줍니다. 재시도는 목록의 <code>refresh()</code>를 호출하며, 이 처리는 상태를 조회 중으로 바꾼 뒤 새 조회의 성공 또는 실패를 반영합니다. 재조회 때에도 기다림을 표시하도록 <code>skipLoadingOnRefresh: false</code>를 명시했습니다.</p>
-<p>조회에 성공하면 분류를 해제할 수 있는 ‘없음’ 선택지와 받은 컬렉션을 표시합니다. 성공한 목록이 비어 있을 때에는 ‘컬렉션이 없어요’라는 안내를 함께 보여줍니다. <strong>‘없음’은 사용자가 고르는 동작이고, ‘컬렉션이 없어요’는 조회 결과에 대한 안내</strong>입니다. 둘은 같은 의미로 쓰이지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/presentation/widgets/collection_picker_sheet.dart#L6-L97">공용 피커 코드</a>, <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/presentation/provider/collection_list_provider.dart#L14-L57">목록 새로 조회 코드</a></p>
-<p>홈에서 창을 여는 순서도 정리했습니다. 링크 카드의 메뉴에서 ‘컬렉션으로 이동’을 누르면 메뉴를 닫으면서 이동 의도를 결과로 돌려주고, 그 결과를 받은 쪽에서 선택 창을 엽니다. 같은 클릭 처리 안에서 메뉴 닫기와 다음 창 열기를 곧바로 실행하던 흐름을 나눈 것입니다. 기준 코드는 메뉴의 닫힘 결과를 기다리지만, 닫히는 애니메이션이 완전히 끝날 때까지 기다리지는 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/screens/home_screen.dart#L238-L305">메뉴 결과와 피커 열기</a></p>
+<p>조회 상태를 담은 <code>AsyncValue</code>의 <code>when</code>으로 기다림·실패·성공에 맞는 화면을 골랐습니다. 조회 중에는 진행 표시를, 실패하면 ‘컬렉션을 불러오지 못했습니다’와 ‘다시 시도’를 보여 줍니다. 재시도를 누르면 <code>refresh()</code>가 상태를 조회 중으로 바꾼 뒤 새 요청의 성공 또는 실패를 반영합니다. 다시 조회할 때도 진행 표시를 보이도록 <code>skipLoadingOnRefresh: false</code>를 명시했습니다.</p>
+<p>성공한 경우에는 분류를 해제하는 ‘없음’ 선택지와 받은 목록을 표시합니다. <strong>‘컬렉션이 없어요’ 안내는 조회에 성공했고 받은 항목이 0개일 때만</strong> 함께 보여 줍니다. 따라서 사용자가 분류를 해제하려고 누르는 ‘없음’과, 조회 결과를 알려 주는 빈 목록 안내가 구분됩니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/presentation/widgets/collection_picker_sheet.dart#L6-L97">공용 피커 코드</a> · <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/presentation/provider/collection_list_provider.dart#L14-L57">다시 조회하는 처리</a></p>
+<p>홈에서 두 창을 잇는 순서도 손봤습니다. 이전에는 메뉴의 같은 클릭 처리 안에서 메뉴를 닫고 바로 선택 창을 열었습니다. 변경 뒤에는 ‘컬렉션으로 이동’이라는 결과를 돌려주며 메뉴를 닫고, 그 결과를 받은 쪽에서 다음 창을 엽니다. 메뉴 닫기의 결과를 기다리도록 나눴지만, 닫히는 애니메이션의 완전 종료까지 기다리는 구현은 아닙니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/screens/home_screen.dart#L238-L305">메뉴 결과를 받아 피커 열기</a></p>
 <h2 id="section-04">왜 창 안에서 상태 변화를 받는 방법을 골랐나</h2>
-<p>당시 계획서에는 다음 세 방법의 비교가 남아 있습니다. 아래 선택 이유는 그 기록에 근거하며, 이번 학습 문서를 쓰면서 과거의 고민을 새로 만든 것이 아닙니다.</p>
+<p>목록이 준비된 뒤에만 창을 열거나, 이미 받은 데이터를 계속 남기는 방법도 당시 계획에서 비교했습니다. 선택 기준은 처음 한 번 목록을 보여 주는 데서 끝나지 않고, 기다림과 실패를 알리고 재조회 뒤에도 같은 창을 갱신할 수 있는가였습니다.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
 <thead>
 <tr>
@@ -90,22 +90,23 @@
 </thead>
 <tbody>
 <tr>
-  <td>조회가 끝날 때까지 기다린 뒤 창 열기(<code>await future</code>)</td>
-  <td>최초 결과를 받고 열 수 있지만 그동안 창이 뜨지 않고, 열린 뒤의 재조회 변화를 반영하는 연결은 별도로 필요함</td>
+  <td>조회 완료 뒤 창 열기(<code>await future</code>)</td>
+  <td>처음에는 결과를 받고 열 수 있지만 그동안 창이 뜨지 않음. 열린 뒤의 재조회 변화는 별도로 연결해야 함</td>
 </tr>
 <tr>
   <td>창 안에서 상태 변화 받기(<code>watch</code>, 채택)</td>
-  <td>창을 바로 열어 기다림을 안내하고, 조회 완료·실패·이후 재조회도 같은 화면에서 반영할 수 있음</td>
+  <td>창을 바로 열어 기다림을 알리고, 조회 완료·실패·재조회 결과를 같은 화면에 반영할 수 있음</td>
 </tr>
 <tr>
   <td>임시 데이터를 계속 보관하기(<code>keepAlive</code>)</td>
-  <td>데이터가 남아 있어 증상을 줄일 수 있지만, 이 방법만으로 실패·빈 목록을 구분하거나 열린 화면의 갱신 문제를 해결하지 못함. 앱 전체의 보관 정책도 바뀜</td>
+  <td>증상을 줄일 수 있으나 이 방법만으로 실패와 빈 목록을 구분하거나 열린 창을 갱신하지는 못함</td>
 </tr>
 </tbody>
 </table></div>
-<p>선택한 방법은 기존 데이터 보관·재조회 정책을 유지하면서 창의 표시 방식을 고치는 것이었습니다. 대신 창에서 상태별 화면과 재시도를 관리해야 합니다. 입력 화면에 분류를 연결할 때도 기존 선택 창을 재사용했고, <strong>창 안에서 새 컬렉션을 만드는 기능은 당시 사용자 결정으로 제외</strong>했습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/plans/2026-07-29-collection-picker-empty-list-fix.md#L121-L145">실제 대안 비교</a>, <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/daily_task_log/2026-07/2026-07-30_session.md#L36-L44">07-30 요청과 선택 기록</a></p>
+<p>임시 데이터를 계속 남기려면 앱의 보관 정책도 바꿔야 했습니다. 저는 창에서 변화를 받는 방법을 적용해 기존 데이터 해제·재조회 정책을 유지했습니다. 링크 이동 뒤 분류별 개수를 새로 가져오는 처리도 남겼습니다. 대신 창 안에서 상태별 화면과 재시도를 다루는 코드가 필요해졌습니다. 이 선택 이유는 당시 대안 비교와 구현 범위를 풀어 쓴 것이며, 기록에 없는 고민을 추가하지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/docs/plans/2026-07-29-collection-picker-empty-list-fix.md#L121-L145">당시 대안 비교</a></p>
 <h2 id="section-05">분류 선택·해제·닫기를 구분하고 저장까지 연결하기</h2>
-<p>선택 창을 닫는 동작은 세 가지 의도를 가질 수 있습니다. 예를 들어 편집 중인 링크가 ‘공부’에 들어 있을 때, 다른 분류를 고르는 것과 분류를 없애는 것, 아무것도 바꾸지 않고 돌아가는 것은 다릅니다.</p>
+<p>선택 창을 바로잡은 다음에는 저장 폼을 확인했습니다. 당시 조사 기록의 <code>git grep</code>은 <code>updateCollectionId</code>의 정의와 테스트 호출만 보여 줬습니다. 사용자가 고른 분류를 폼에 넣는 화면의 호출이 연결되지 않은 상태였습니다. 반면 폼의 <code>collectionId</code>를 링크 저장 데이터에 담아 생성·수정으로 보내는 경로는 이미 있었습니다. PR #73의 해당 업무 규칙·데이터 처리와 링크 provider 경로 diff도 0줄이라는 기존 대조가 있습니다. 저는 기존 저장 경로에 선택 화면을 연결하는 범위로 작업했습니다. <span class="record-ref">기존 경로와 변경 범위 LNOTE-C04</span></p>
+<p>홈에서 쓰던 선택 창을 여러 화면이 함께 쓰는 공용 코드로 옮기고, 추가·편집 화면이 공통으로 쓰는 <code>LinkFormFields</code>에 컬렉션 항목을 넣었습니다. 사용자가 그 항목을 누르면 같은 선택 창이 열립니다. 이때 창에서 돌아오는 결과에는 세 가지 의도가 담겨야 했습니다. 편집 중인 링크가 ‘공부’ 분류에 있다면, 다른 분류를 고르기·분류 해제·아무것도 바꾸지 않고 닫기는 서로 다른 행동입니다. ‘공부’는 설명용 예시입니다.</p>
 <div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
 <thead>
 <tr>
@@ -132,63 +133,22 @@
 </tr>
 </tbody>
 </table></div>
-<p>여기서 ID는 컬렉션을 구분하는 고유값이고, <code>null</code>은 값이 없음을 뜻합니다. ID만 반환하면 ‘분류 해제’와 ‘선택하지 않고 닫기’가 모두 <code>null</code>이 되어 두 의도를 구분할 수 없습니다. 그래서 <strong>선택했다는 사실을 담는 결과 객체(<code>CollectionPick</code>) 안에 ID를 넣었습니다</strong>. 객체가 있고 그 안의 ID가 비었으면 해제이고, 객체 자체가 없으면 닫기입니다. 입력 화면은 먼저 결과 객체가 있는지 확인하고, 있을 때만 폼 상태를 바꿉니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/widgets/link_form_fields.dart#L67-L89">선택 결과·폼 반영 코드</a></p>
-<p>저장 화면을 연결할 때에는 먼저 기존 코드가 어디까지 갖춰져 있는지 확인했습니다. 당시 기록의 <code>git grep</code> 결과는 <code>updateCollectionId</code>의 정의와 테스트 호출을 보여줬고, 선택값을 실제 입력 화면에서 바꾸는 호출은 연결되지 않은 상태였습니다. 반면 폼의 <code>collectionId</code>를 저장 데이터에 담아 생성·수정으로 보내는 경로는 이미 있었습니다. 따라서 작업은 서버 저장 구조를 새로 만드는 대신 <strong>사용자가 값을 고르는 화면과 기존 저장 경로를 연결하는 것</strong>으로 좁혔습니다. PR #73의 해당 업무 규칙·데이터 처리 경로 diff가 0줄이라는 기존 대조도 이 범위를 뒷받침합니다. <span class="record-ref">LNOTE-C04</span></p>
-<p>추가·편집 화면에서의 변경 후 흐름은 다음과 같습니다.</p>
-<ol>
-<li>사용자가 폼의 컬렉션 항목을 누르면 공용 선택 창을 엽니다. 이 창은 홈에서 쓰던 선택 창을 여러 화면에서 사용할 수 있도록 옮긴 것입니다.</li>
-<li>선택 결과 객체가 돌아오면 그 안의 ID를 <code>updateCollectionId</code>로 폼 상태에 넣습니다. 창만 닫았다면 이 변경을 건너뜁니다. 이 시점에는 저장 버튼을 누르기 전 폼의 선택값이 바뀐 것입니다.</li>
-<li>화면은 폼의 선택값에 맞는 컬렉션 이름을 표시합니다. ID는 있지만 지금 받은 목록에서 이름을 찾지 못하면 ‘없음’이라고 단정하지 않고 ‘선택한 컬렉션’으로 표시해 값을 유지합니다.</li>
-<li>사용자가 저장을 누르면 <code>submit()</code>이 URL·제목 등 필수 입력을 확인하고, 폼의 <code>collectionId</code>를 링크 저장 데이터인 <code>LinkEntity</code>에 함께 넣습니다.</li>
-<li>새 링크면 기존 생성 처리로, 기존 링크면 기존 수정 처리로 전달합니다. 선택값이 기존 저장 흐름에 포함되므로 저장 뒤 다시 홈에서 분류를 옮기는 단계를 줄일 수 있게 연결한 것입니다. 실제 시간 단축량은 측정하지 않았습니다.</li>
-</ol>
-<p>추가·편집 화면은 같은 입력 필드 묶음인 <code>LinkFormFields</code>를 사용합니다. 다른 앱이 공유한 URL을 받아 여는 링크 추가 화면도 이 공용 필드를 쓰므로 코드상 연결 범위에 포함됩니다. 홈에서 이미 저장한 링크를 옮기는 경우에는 선택값을 폼에 보관하는 대신 기존 이동 처리를 호출합니다. 이 코드 연결을 각 진입 경로의 실기기 시험 통과로 확대하지 않습니다. <span class="record-ref">폼·추가/편집 화면 연결 근거</span>, <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/provider/link_form_provider.dart#L175-L233">기존 저장 처리</a></p>
+<p>ID는 컬렉션을 구분하는 고유값이고, <code>null</code>은 값이 없음을 뜻합니다. ID만 돌려주면 ‘없음’을 고른 경우와 창만 닫은 경우가 모두 <code>null</code>이 됩니다. 그래서 <strong>선택했다는 결과인 <code>CollectionPick</code> 안에 ID를 담는 구조</strong>를 사용했습니다. 결과 자체가 없으면 취소이고, 결과가 있지만 ID가 비었으면 분류 해제입니다. 폼은 결과가 있을 때만 <code>updateCollectionId</code>로 선택값을 바꿉니다. 이 시점에는 입력 중인 값만 달라지고, 아직 링크를 저장한 것은 아닙니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/widgets/link_form_fields.dart#L67-L89">결과 구분과 폼 반영</a></p>
+<p>폼에는 선택한 분류의 이름을 보여 줍니다. ID는 있는데 지금 받은 목록에서 이름을 찾지 못하면 ‘선택한 컬렉션’이라고 표시하고 값을 유지합니다. 이름을 못 찾았다는 이유로 ‘없음’이라고 표시하거나 기존 분류를 지우지 않도록 한 것입니다.</p>
+<p>사용자가 저장을 누르면 기존 <code>submit()</code>이 URL·제목 등 필수 입력을 확인하고, 폼의 <code>collectionId</code>를 링크 저장 데이터인 <code>LinkEntity</code>에 함께 담습니다. 새 링크는 생성 처리로, 기존 링크는 수정 처리로 보냅니다. 사용자는 저장 전에 분류까지 정할 수 있게 됐고, 저장 후 홈에서 다시 옮기는 작업을 줄일 수 있는 연결을 만들었습니다. 실제 시간 단축량은 측정하지 않았습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/link/presentation/provider/link_form_provider.dart#L175-L233">기존 저장 처리</a></p>
+<p>다른 앱에서 공유한 URL로 열린 추가 화면도 같은 공용 필드를 쓰므로 코드상 연결 범위에 포함됩니다. 홈에서 이미 저장한 링크를 옮길 때에는 폼에 임시로 담는 과정을 거치지 않고 기존 이동 처리를 호출합니다. 이 연결 범위를 편집·공유 등 모든 경로의 실기기 시험 통과로 바꾸지는 않습니다. <span class="record-ref">추가·편집과 공유 경로의 근거</span></p>
 <h2 id="section-06">본인 담당과 Claude 공동 작성</h2>
-<p>이 사건의 <strong>분석·설계·구현·테스트·실기기 확인을 모두 본인이 담당했다는 내용은 2026-10-08 사용자 확인</strong>입니다. 기술적으로는 목록이 비어 보인 원인을 조사하고, 상태 변화를 받는 방법을 선택하고, 선택 창을 공용으로 옮겨 추가·편집 폼과 기존 저장 경로를 연결한 범위로 설명합니다. <span class="record-ref">U-LINKNOTE-002</span></p>
-<p>PR #73의 <a href="https://github.com/kaywalker91/LinkNote/commit/7c1087cc76c763b79a4823cb4ceeb01d40a25305">머지 커밋</a>에는 Claude 공동 작성이 표기돼 있습니다. 본인 담당 확인과 AI 공동 작성은 함께 유지합니다. 사용자 확인은 앱 전체의 모든 작업을 혼자 했다는 뜻으로 확대하지 않으며, 어떤 코드·시험을 AI가 각각 작성했는지는 추가 확인 상태입니다.</p>
+<p>본인이 맡았다고 확인된 범위는 PR #72의 빈 목록 수정과 PR #73의 추가·편집 폼 연결입니다. 원인을 분석하고 상태 변화의 반영 방식을 정한 일, 선택 창을 공용으로 옮겨 저장 경로에 연결한 일, 시험과 실기기 확인을 이 두 변경의 담당 범위로 설명합니다. 2026-10-08의 사용자 확인을 앱 전체의 모든 작업을 혼자 했다는 뜻으로 넓히지 않습니다. <span class="record-ref">담당 확인 U-LINKNOTE-002</span></p>
+<p>PR #73의 <a href="https://github.com/kaywalker91/LinkNote/commit/7c1087cc76c763b79a4823cb4ceeb01d40a25305">머지 기록</a>은 Claude 공동 작성을 명시합니다. 본인 담당 확인과 함께 보존하며, 어떤 코드·시험을 AI가 각각 작성했는지, 빌드 업로드를 누가 실행했는지는 추가 확인으로 남깁니다.</p>
 <h2 id="section-07">확인된 결과와 남은 한계</h2>
-<p>구현에서는 조회 중·실패·정상 빈 목록의 안내가 나뉘고, 조회 결과가 달라지면 열린 창도 갱신되도록 연결했습니다. 추가·편집 폼의 선택·해제는 기존 생성·수정 경로로 전달하고, 창만 닫으면 기존 선택을 유지합니다. 이 설명은 기존 근거표와 이번 기준 코드 읽기에 근거합니다.</p>
-<div class="table-wrap" tabindex="0" role="region" aria-label="설명 표"><table>
-<thead>
-<tr>
-  <th>구분</th>
-  <th>확인된 내용</th>
-  <th>해석 범위</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>당시 시험 기록</td>
-  <td>07-29 홈 15/15·링크 목록 provider 20/20, 07-30 전체 714개·신규 13개·코드 분석 이슈 0·CI 4/4 통과</td>
-  <td>당시 문서의 실행 결과. 이번 재실행이나 현재 전체 경로 성공률이 아님</td>
-</tr>
-<tr>
-  <td>시험 정의의 범위</td>
-  <td>신규 13개는 피커 7개·추가 폼 5개·생성 데이터 전달 1개. 기존 근거표가 정의를 대조</td>
-  <td>선택·해제·닫기·저장값 전달의 검사 범위. 실제 서버·편집/공유 전체 경로의 실기기 시험과 구분</td>
-</tr>
-<tr>
-  <td>당시 배포 기록</td>
-  <td>07-30의 1.1.7+15 배포용 AAB 생성·Play 내부테스트 업로드·사용자 확인 완료</td>
-  <td>당시 기록. 내부테스트 배포를 현재 공개 운영 버전으로 바꾸지 않음</td>
-</tr>
-<tr>
-  <td>본인 사용 결과</td>
-  <td>2026-10-08 기준 개발 진행 중이며 내부테스트 등록 후 직접 사용하고 피커가 잘 작동한다고 사용자 확인</td>
-  <td>확인된 사용 결과로 유지. 현재 설치 빌드·기기와 QA 모든 항목의 통과는 별도</td>
-</tr>
-</tbody>
-</table></div>
-<p>근거: <span class="record-ref">시험·배포 범위 LNOTE-C05~06</span>, <span class="record-ref">사용 결과 U-LINKNOTE-003</span>. 자동 시험 수는 사용자의 분류 성공률·오류 감소율·저장 시간 개선율을 측정한 값이 아닙니다. 07-29 계획서의 수동 QA 1~8은 미체크이며, 후속 사용 확인으로 그 항목을 모두 통과 처리하지 않습니다.</p>
-<p>기준 코드에는 <strong>처음 가져온 페이지 밖으로 선택 창 자체에서 더 찾아가는 기능이 연결되지 않은 한계</strong>가 남아 있습니다. 서버 목록 조회의 기본 페이지 크기는 20개이고, 이번에 피커 파일 전체와 <code>loadMore|hasMore|nextCursor</code> 검색 결과 0건을 대조했습니다. 페이지란 많은 항목을 한 번에 전부 가져오지 않고 나눠 받는 단위입니다. 목록 관리 코드에 다음 페이지를 가져오는 처리가 있어도, 선택 창이 그 처리를 호출하지 않으면 창 안에서 다음 항목을 탐색할 수 없습니다. 다만 다른 화면에서 이미 추가로 불러온 항목은 같은 목록에 있어 표시될 수 있으므로, 어떤 상황에서나 반드시 20개만 보인다고 단정하지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/data/datasource/collection_remote_datasource.dart#L17-L47">API 페이지 크기</a>, <span class="record-ref">더보기의 기존 대조 LNOTE-C07</span></p>
-<p>현재 목록 밖의 선택값은 중립적인 이름으로 유지하지만 그 이름을 완전히 찾아주는 기능과는 구분합니다. 창 전환도 닫힘 결과 수신까지이며 애니메이션의 완전 종료 보장은 아닙니다. 현재 설치 빌드·기기, 시나리오별 수동 QA, 공개 운영, 효과 수치와 AI 세부 분업은 추가 확인으로 남깁니다. 이번 작성의 검증은 설명 내용·기준 코드·문서 연결 대조이며, 실제 독자 이해도나 면접 성과의 검증은 아닙니다.</p>
+<p>변경 후 코드는 조회 중·실패·성공한 빈 목록을 구분하고, 결과가 도착하면 열린 창을 갱신합니다. 추가·편집 폼에서는 분류 선택·해제를 기존 저장 경로로 보내고, 창만 닫으면 기존 값을 유지합니다. <strong>2026-10-08 사용자는 내부테스트 등록 후 직접 사용 중이며 컬렉션 피커가 잘 작동한다고 확인했습니다.</strong> 이는 본인 사용 결과이고, 현재 설치 빌드·기기나 모든 수동 QA 항목의 통과를 확정한 답변은 아닙니다. <span class="record-ref">사용 결과 U-LINKNOTE-003</span></p>
+<p>당시 시험 기록도 함께 남깁니다. 07-29에는 홈 시험 15/15·링크 목록 provider 시험 20/20 통과가, 07-30에는 신규 13개를 포함한 전체 714개·코드 분석 이슈 0·CI 4/4 통과가 적혀 있습니다. CI는 변경 뒤 정해 둔 분석·시험·보안 검사·빌드를 자동 실행하는 검사입니다. 같은 날 1.1.7+15 배포용 AAB 생성·Play 내부테스트 업로드·사용자 확인 완료도 기록돼 있습니다. 내부테스트 배포를 현재 공개 운영으로 바꾸거나, 시험 수를 분류 성공률·저장 시간 개선율로 해석하지 않습니다. 이번 작성에서는 앱이나 Flutter 시험을 다시 실행하지 않았습니다. <span class="record-ref">당시 시험·배포 기록 LNOTE-C05~06</span></p>
+<p>신규 13개 시험의 정의는 공용 피커 7개·추가 폼 5개·생성 데이터 전달 1개입니다. 선택·해제·닫기와 폼 상태·저장 데이터 전달을 검사하지만 실제 서버를 거치는 편집·공유의 전체 경로 시험과는 구분합니다. 홈 시험은 응답 시점을 조절해 조회 중에서 목록으로, 오류에서 재시도 후 목록으로 바뀌는지 살핍니다. 공용 피커의 재시도 시험 자체는 <code>refresh()</code> 호출 횟수까지만 확인합니다. 07-29 계획의 수동 QA 1~8은 미체크로 남아 있으며, 후속 사용 확인으로 모두 통과 처리하지 않습니다. <span class="record-ref">시험 정의와 수동 QA의 범위</span></p>
+<p>목록이 많은 경우의 한계도 남았습니다. 기준 API의 기본 페이지 크기는 20개입니다. 페이지는 많은 항목을 나눠 받는 단위입니다. 피커 파일 전체를 읽고 <code>loadMore|hasMore|nextCursor</code>를 검색한 결과 0건이라는 대조에 따라, <strong>처음 가져온 페이지 밖으로 선택 창 자체에서 더 찾아가는 기능은 연결되지 않은 상태</strong>로 설명합니다. 목록 관리 코드에 다음 페이지 조회가 있어도 창에서 호출하지 않으면 직접 탐색할 수 없습니다. 다만 다른 화면이 이미 추가로 받은 항목은 같은 목록에 있어 표시될 수 있으므로, 항상 20개만 보인다고 단정하지 않습니다. <a href="https://github.com/kaywalker91/LinkNote/blob/8805eca463e0f4aa495adc11b1d2a1ac42d2388f/lib/features/collection/data/datasource/collection_remote_datasource.dart#L17-L47">API 페이지 크기</a> · <span class="record-ref">더보기 대조 LNOTE-C07</span></p>
+<p>목록 밖 선택값의 ‘선택한 컬렉션’ 표시는 값을 보호하는 처리이며 이름을 완전히 찾아주는 기능은 아닙니다. 메뉴 전환도 닫힘 결과 수신까지입니다. 현재 설치 빌드·기기, 시나리오별 수동 QA·공개 운영·효과 수치·AI 세부 분업은 추가 확인입니다. 이번에 확인한 것은 설명과 기준 코드·기록의 일치, 문서 연결과 공개 페이지이며 실제 독자 이해도나 면접 효과는 확인하지 않았습니다.</p>
 <h2 id="section-08">읽은 내용을 자기 말로 확인하기</h2>
-<p>아래 질문은 본문의 원리를 이해했는지 확인하기 위한 것입니다. 면접 답변 대본이나 모범 답안은 작성하지 않습니다.</p>
-<ol>
-<li>컬렉션이 실제로 있는 사용자에게도 빈 목록이 보였던 이유를, 요청 시점과 결과 도착 시점으로 나누어 설명할 수 있나요? <a href="#section-02">조회 상태와 변경 전 동작</a></li>
-<li>데이터를 계속 보관하는 것만으로는 부족했던 이유와, 창 안에서 상태 변화를 받게 한 뒤 화면이 바뀌는 순서를 설명할 수 있나요? <a href="#section-03">화면 갱신</a> · <a href="#section-04">선택 이유</a></li>
-<li>‘없음’을 고르는 것과 창만 닫는 것을 구분해야 하는 이유, 그리고 선택값이 서버 저장 처리로 전달되기까지의 경로를 설명할 수 있나요? 설명할 때 당시 시험·본인 사용 확인과 남은 더보기 한계도 구분해 보세요. <a href="#section-05">선택과 저장</a> · <a href="#section-07">결과와 한계</a></li>
-</ol>
+<p>이 사례는 창을 연 시점과 목록이 도착한 시점이 다를 수 있다는 점에서 시작합니다. ‘결과를 아직 못 받았다’와 ‘받았지만 항목이 없다’를 왜 나눠야 하는지, 한 번 읽기에서 상태 변화를 받는 방식으로 바꿨을 때 화면이 어떻게 이어지는지 설명해 볼 수 있습니다. <a href="#section-02">원인과 시점</a> · <a href="#section-03">화면 갱신</a></p>
+<p>저장 연결을 설명할 때에는 ‘없음’을 고른 결과와 창만 닫은 결과가 어떻게 다른지, 폼의 선택값이 언제 실제 저장 데이터에 담기는지 이어 짚으면 됩니다. 본인 사용 확인과 당시 시험이 뒷받침하는 범위, 남아 있는 더보기 한계도 함께 설명할 수 있어야 합니다. 이 안내는 학습용이며 기존 면접 답변을 수정하거나 면접 효과를 검증한 것은 아닙니다. <a href="#section-05">선택부터 저장까지</a> · <a href="#section-07">결과와 한계</a></p>
 
   <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
   <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/linknote/share-recovery/"><span>← 이전 해설</span><strong>공유한 링크를 저장 화면까지 이어 주기</strong></a><a href="/career-explained/mindlog/draft-recovery/"><span>다음 해설 →</span><strong>쓰던 일기를 다시 이어 쓰게 하기</strong></a></nav>
