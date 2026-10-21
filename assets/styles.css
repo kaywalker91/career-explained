@@ -89,12 +89,6 @@ main, .page-content { min-width: 0; }
 .flow-resume span, .flow-caption { font-size: 12px; line-height: 1.85; color: var(--muted); }
 .flow-caption { margin-top: 16px; }
 .home-page .layout { padding-top: 56px; }
-.scope-note { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 15px 0; margin-bottom: 28px; border-block: 1px solid var(--line); font-size: 13px; color: var(--muted); }
-.scope-note strong { color: var(--accent); font-weight: 650; }
-.category-jumps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 56px; }
-.category-jumps a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; border: 1px solid var(--line); border-radius: 5px; padding: 8px 13px; font-size: 12px; text-decoration: none; }
-.category-jumps a:hover { background: var(--soft); }
-.category-jumps span { color: var(--muted); font-size: 11px; }
 .category-section + .category-section { margin-top: 54px; }
 .category-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 16px; margin-bottom: 24px; border-bottom: 2px solid var(--accent); }
 .category-heading h2 { font-size: 28px; letter-spacing: -.8px; }
@@ -205,9 +199,7 @@ main, .page-content { min-width: 0; }
   .flow-resume p { font-size: 13px; }
   .hero-description { order: 4; margin-top: 24px; font-size: 14px; }
   .home-page .layout { padding-top: 28px; }
-  .scope-note { gap: 5px; margin-bottom: 24px; font-size: 13px; }
   .project-heading { display: block; }
-  .category-jumps { margin-bottom: 30px; }
   .category-heading h2 { font-size: 25px; }
   .project-heading h3 { font-size: 21px; }
   .project-heading p { margin-top: 4px; }
