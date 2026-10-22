@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="FAQ와 축제 매장 상세의 일부 RxJava 전환을 따라가며, 요청·응답 해석과 화면 표시를 분리한 변화와 확인 한계를 설명합니다.">
+  <title>김대각(kaywalker) - 경력해설집</title>
+  <link rel="stylesheet" href="/career-explained/assets/styles.css">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/career-explained/assets/favicon.ico">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/career-explained/assets/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/career-explained/assets/apple-touch-icon.png">
+</head>
+<body class="article-page">
+  <a class="skip-link" href="#content">본문으로 이동</a>
+  <div class="masthead-wrap">
+  <header class="masthead">
+    <a class="brand" href="/career-explained/" aria-label="Kay 경력 해설집 홈"><span class="brand-mark">KAY<span>.</span></span><span class="brand-name">경력 해설집</span></a>
+    <a class="header-link" href="/career-explained/">모든 해설 <span aria-hidden="true">↗</span></a>
+  </header>
+  </div>
+  <main id="content" tabindex="-1">
+  <div class="reading-cover"><header class="reading-header">
+  <p class="breadcrumb"><a href="/career-explained/">모든 해설</a> / <a href="/career-explained/#category-placelink">플레이스링크</a> / <a href="/career-explained/#pointtour">포인트투어</a></p>
+  <p class="eyebrow">Android · 비동기 처리 · 오류 대응</p>
+  <h1>서버를 기다리는 작업과 화면 갱신을 나누기</h1>
+  <p class="lede">FAQ와 축제 매장 상세의 일부 RxJava 전환을 따라가며, 요청·응답 해석과 화면 표시를 분리한 변화와 확인 한계를 설명합니다.</p>
+  <p class="reading-meta"><span>PLACELINK-001</span><span>해설·근거 대조 완료</span><span>해설 기준 2026-10-22</span></p>
+</header></div>
+  <div class="layout">
+    <aside class="sidebar"><p class="eyebrow">CAREER NOTES</p><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>1편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><a class="menu-project" href="/career-explained/#wallet">외부 지갑 연결</a><a class="menu-event" href="/career-explained/wallet/response-order/">지갑 승인 뒤 멈추는 연결과 남는 QR 창 다루기</a></details><details class="menu-category"><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category" open><summary>플레이스링크<span>2편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><a class="menu-project" href="/career-explained/#pointtour">포인트투어</a><a class="menu-event" href="/career-explained/pointtour/async-flow/" aria-current="page">서버를 기다리는 작업과 화면 갱신을 나누기</a><a class="menu-event" href="/career-explained/pointtour/ios-handover/">iOS 화면과 로그인 흐름을 후속 담당자에게 남기기</a></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav>
+      <p class="sidebar-note"><strong>경험을 이해하는 순서</strong>문제와 사용 장면<br>원리와 선택 이유<br>해결 과정<br>본인 역할과 결과</p>
+    </aside>
+    <div class="page-content">
+      <details class="mobile-navigation"><summary>해설 목록 보기</summary><nav class="project-menu" aria-label="해설 탐색"><a href="/career-explained/">모든 해설</a><details class="menu-category"><summary>로운컴퍼니<span>9편</span></summary><a class="menu-overview" href="/career-explained/#category-rowoon-company">카테고리 목록</a><a class="menu-project" href="/career-explained/#pllilab">PLLI LAB</a><a class="menu-event" href="/career-explained/pllilab/batch-resume/">많은 인쇄 작업을 차례로 처리하고 중단 뒤 이어 가기</a><a class="menu-event" href="/career-explained/pllilab/automatic-rendering/">인쇄 작업의 자동 시작과 중복 실행 관리하기</a><a class="menu-event" href="/career-explained/pllilab/print-validation/">실제 인쇄 누락과 검사기의 잘못된 판정 구분하기</a><a class="menu-project" href="/career-explained/#hidden-catch">틀린그림찾기</a><a class="menu-event" href="/career-explained/hidden-catch/server-decisions/">이용자와 보상을 서버에서 확인하고 발급 카드 값 지키기</a><a class="menu-event" href="/career-explained/hidden-catch/reserve-before-charge/">게임 그림을 준비한 뒤 도전권을 차감하도록 순서 바꾸기</a><a class="menu-event" href="/career-explained/hidden-catch/mobile-round-check/">그림 발행부터 모바일 한 판과 관리자 기록까지 맞춰 보기</a><a class="menu-project" href="/career-explained/#calendar-qa">캘린더·다이어리 QA</a><a class="menu-event" href="/career-explained/calendar-qa/coverage-gate/">읽지 못한 문서를 정상으로 보고하지 않기</a><a class="menu-event" href="/career-explained/calendar-qa/designer-report/">오류를 디자이너가 찾을 수 있는 위치로 전달하기</a><a class="menu-event" href="/career-explained/calendar-qa/printed-error-comparison/">검출한 오류를 실제 인쇄물·수정본과 대조하기</a></details><details class="menu-category"><summary>포롱<span>1편</span></summary><a class="menu-overview" href="/career-explained/#category-forlong">카테고리 목록</a><a class="menu-project" href="/career-explained/#wallet">외부 지갑 연결</a><a class="menu-event" href="/career-explained/wallet/response-order/">지갑 승인 뒤 멈추는 연결과 남는 QR 창 다루기</a></details><details class="menu-category"><summary>시선아이티<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-seesun-it">카테고리 목록</a><a class="menu-project" href="/career-explained/#disaster-safety">안전디딤돌·이머전시레디</a><a class="menu-event" href="/career-explained/disaster-safety/flutter-state/">앱 화면 전환과 데이터 갱신을 함께 정리하기</a><a class="menu-event" href="/career-explained/disaster-safety/safekorea-accessibility/">재난 정보를 읽고 조작하는 접근성 보완하기</a><a class="menu-event" href="/career-explained/disaster-safety/emergency-ready-accessibility/">탭의 이름·선택·동작을 접근성 안내로 연결하기</a></details><details class="menu-category" open><summary>플레이스링크<span>2편</span></summary><a class="menu-overview" href="/career-explained/#category-placelink">카테고리 목록</a><a class="menu-project" href="/career-explained/#pointtour">포인트투어</a><a class="menu-event" href="/career-explained/pointtour/async-flow/" aria-current="page">서버를 기다리는 작업과 화면 갱신을 나누기</a><a class="menu-event" href="/career-explained/pointtour/ios-handover/">iOS 화면과 로그인 흐름을 후속 담당자에게 남기기</a></details><details class="menu-category"><summary>개인프로젝트<span>3편</span></summary><a class="menu-overview" href="/career-explained/#category-personal-projects">카테고리 목록</a><a class="menu-project" href="/career-explained/#linknote">LinkNote</a><a class="menu-event" href="/career-explained/linknote/share-recovery/">공유한 링크를 저장 화면까지 이어 주기</a><a class="menu-event" href="/career-explained/linknote/collection-picker/">있는데도 비어 보이는 목록 바로잡기</a><a class="menu-project" href="/career-explained/#mindlog">MindLog</a><a class="menu-event" href="/career-explained/mindlog/draft-recovery/">쓰던 일기를 다시 이어 쓰게 하기</a></details></nav></details>
+      <div class="reading-grid"><div class="reading">
+  <details class="source-note"><summary>이 글의 기준과 확인 범위</summary><p>이 공개 해설의 기준은 Android 일부의 재직 중 코드·Git과, iOS 담당의 본인 확인 및 기존 인수인계·Swift 대조 기록입니다. Android 코드 2파일·전환 커밋 2개는 2026-10-22에 다시 읽었고, iOS 원본 ZIP·TXT는 이번에 재열람하지 못했습니다. 앱 빌드·실기기·서버·스토어 재시험과 실제 독자 이해도·면접 효과는 이번에 확인하지 않았습니다.</p>
+<p>공개 코드·기록은 링크로 연결하고, 비공개 근거 기록은 제목만 표시했습니다. 본인·AI·협업자의 기여, 확인된 결과와 남은 한계를 함께 읽어 주세요.</p></details>
+  <details class="mobile-toc"><summary>이 글의 목차</summary><ol><li><a href="#context">포인트투어에서 방문과 매장 이용을 연결하는 과정</a></li><li><a href="#section-01">사용자가 목록을 기다리는 동안 앱은 무엇을 해야 하나</a></li><li><a href="#section-02">요청을 보내는 곳과 받은 목록을 보여 주는 곳을 나눈다</a></li><li><a href="#section-03">구조를 바꿨다는 것과 모든 오류를 해결했다는 것은 다르다</a></li><li><a href="#section-04">확인한 결과와 성과 수치의 범위</a></li></ol></details>
+  <h2 id="context">포인트투어에서 방문과 매장 이용을 연결하는 과정</h2>
+<p>포인트투어는 장소를 방문하거나 매장을 이용하는 활동을 포인트·혜택에 연결하는 서비스입니다. 이용자가 쓰는 앱과 매장 운영자가 쓰는 앱이 있고, Android·iOS의 화면·서버 응답·현장 운영이 이어져야 합니다. 아래 두 사례는 통신 처리의 일부 전환과 iOS 유지보수 인수인계를 설명합니다. 같은 서비스의 모든 기능을 한 사람이 처음부터 구현했다는 설명은 아닙니다.</p>
+<h2 id="section-01">사용자가 목록을 기다리는 동안 앱은 무엇을 해야 하나</h2>
+<p>앱에서 자주 묻는 질문(FAQ)을 열면 서버에서 질문과 답을 받아 목록으로 보여 줍니다. 서버 응답은 바로 오지 않을 수 있지만, 그동안 화면을 그리는 일까지 기다리게 해서는 안 됩니다. 서버를 기다리는 일과 화면에 결과를 표시하는 일을 나눠 처리해야 합니다. 이렇게 완료 시점이 다른 작업을 이어 다루는 방식을 비동기 처리라고 합니다.</p>
+<p>기존 이력서는 Android의 오래된 작업 처리 방식인 <strong>AsyncTask</strong>를 쓰는 구조에서 사용하지 않는 메모리가 남고 네트워크 오류가 자주 발생했다고 설명합니다. 이를 <strong>RxJava 2</strong>로 바꾸며 작업·응답·오류의 흐름을 정리한 것이 이력서에 기재된 개인 경험입니다. RxJava는 시간이 걸리는 작업과 그 결과를 받는 처리를 연결하는 도구입니다. <span class="record-ref">문제·역할의 원문 범위</span></p>
+<p>이 사례의 개인 역할은 이력서의 자기 서술입니다. 이번에 직접 수행·협업·시험 범위를 사용자에게 새로 확정받은 것은 아닙니다. 아래 코드 변화와 개인 기여의 근거 수준을 따로 유지합니다.</p>
+<h2 id="section-02">요청을 보내는 곳과 받은 목록을 보여 주는 곳을 나눈다</h2>
+<p>2023-10-27의 FAQ 변경에서는 이전 AsyncTask 실행 호출을 RxJava 작업 호출로 바꿨습니다. 2024-07-05 보관 코드에서 읽은 흐름은 다음과 같습니다.</p>
+<ol>
+<li>서버에 질문·답 목록을 요청하고, 응답의 글자를 앱이 쓸 목록 데이터로 해석합니다.</li>
+<li>이 작업은 <code>Schedulers.io()</code>라는 별도의 작업 흐름에서 실행합니다. 화면 표시를 맡는 흐름과 나누는 부분입니다.</li>
+<li>결과를 받으면 <code>mainThread()</code>로 연결해 목록을 만들고 화면에 적용합니다. 이곳이 화면 스레드입니다.</li>
+<li>결과를 전달받던 연결인 구독은 목록 처리 콜백의 끝에서 정리합니다.</li>
+</ol>
+<p>코드의 <code>fromCallable</code>은 요청·응답 해석을 하나의 작업으로 감싸고, <code>subscribeOn</code>과 <code>observeOn</code>은 각각 작업 실행과 결과 표시를 맡는 곳을 지정합니다. 기술명 자체보다 <strong>통신을 기다린 뒤 화면을 갱신하는 순서를 코드에서 구분한 것</strong>이 이 사례의 변화입니다. <span class="record-ref">FAQ 변경 커밋</span> · <span class="record-ref">작업·화면 반영 코드</span></p>
+<h2 id="section-03">구조를 바꿨다는 것과 모든 오류를 해결했다는 것은 다르다</h2>
+<p>이력서가 설명한 선택 이유는 작업 흐름을 단순화하고 오류 처리 위치를 정리해 운영 안정성을 높이는 것입니다. 코드에서도 통신 예외를 잡아 기록하는 부분을 읽을 수 있습니다. 그러나 이 화면의 모든 실패를 사용자에게 같은 방식으로 안내하거나 자동 재시도하는 완성된 공통 오류 처리로 확대하지 않습니다. 기존 HTTP 요청을 RxJava 작업 안에 감싼 변화와 별도 기능의 도입은 구분합니다.</p>
+<p>구독 정리도 결과 처리가 끝나는 곳에서 합니다. 화면을 닫는 순간 요청을 취소하거나 통신 자체를 중단하는지, 이 변경으로 메모리 누수가 모두 해소됐는지는 이 코드만으로 확정할 수 없습니다. 새 구조에서도 작업을 언제 시작하고 끝낼지 관리하는 부담은 남습니다. 당시 실제 검토한 다른 기술과 배제 이유는 확보된 기록에 추가하지 않았습니다.</p>
+<p>2023-11-20 축제 매장 상세에도 RxJava 처리를 더한 변경이 있습니다. 따라서 확인한 전환은 FAQ에만 한정되지 않지만, 앱 전체 전환 완료율을 확인한 것은 아닙니다. 기존 근거표에는 축제 지도 인증 등에 AsyncTask 클래스가 남아 있는 조회 결과도 있습니다. 일부 전환 코드를 앱 전체의 기존 구조 제거로 설명하지 않습니다. <span class="record-ref">축제 상세 변경</span> · <span class="record-ref">전환 범위와 남은 구조</span></p>
+<h2 id="section-04">확인한 결과와 성과 수치의 범위</h2>
+<p>2026-10-22에는 재직 중 보관 버전의 FAQ·축제 상세 2파일과 전환 커밋 2개를 다시 읽었습니다. 확인한 결과는 <strong>일부 서버 요청이 RxJava 작업으로 바뀌고, 요청·응답 해석과 화면 갱신이 구분된 구현</strong>입니다. 앱 빌드·실기기·서버를 이번에 실행한 결과는 아닙니다.</p>
+<p>크래시가 줄고 이벤트 유입 증가에도 안정적으로 운영했다는 설명은 이력서 기록입니다. 크래시 80%·80~90% 감소와 완전 제거라는 서로 다른 기재는 기간·분모·실패 정의·전후 로그가 미확정이므로 하나의 확정 개선율로 합치지 않습니다. 다운로드 증가와 회사 축제 방문 횟수도 이 구조 변경의 직접 효과로 바꾸지 않습니다. <span class="record-ref">수치 차이와 근거 수준</span></p>
+<p>학습할 때는 ‘서버를 기다리는 곳’, ‘화면을 갱신하는 곳’, ‘결과를 받는 연결의 정리 시점’을 위 흐름에서 찾아 설명하면 됩니다. 개인 수행·측정·배포의 추가 확인을 코드의 존재로 대신하지 않습니다.</p>
+
+  <div class="reading-footer"><p>이 글은 당시 코드와 기록을 바탕으로 정리한 해설입니다. 원문에 기재된 시험·배포 결과와 본인의 사용 확인을 현재 앱의 재시험 결과로 해석하지 않습니다.</p></div>
+  <nav class="article-pagination" aria-label="이전 다음 해설"><a href="/career-explained/disaster-safety/emergency-ready-accessibility/"><span>← 이전 해설</span><strong>탭의 이름·선택·동작을 접근성 안내로 연결하기</strong></a><a href="/career-explained/pointtour/ios-handover/"><span>다음 해설 →</span><strong>iOS 화면과 로그인 흐름을 후속 담당자에게 남기기</strong></a></nav>
+</div><nav class="toc" aria-label="이 글의 목차"><h2>이 글에서 읽을 내용</h2><ol><li><a href="#context">포인트투어에서 방문과 매장 이용을 연결하는 과정</a></li><li><a href="#section-01">사용자가 목록을 기다리는 동안 앱은 무엇을 해야 하나</a></li><li><a href="#section-02">요청을 보내는 곳과 받은 목록을 보여 주는 곳을 나눈다</a></li><li><a href="#section-03">구조를 바꿨다는 것과 모든 오류를 해결했다는 것은 다르다</a></li><li><a href="#section-04">확인한 결과와 성과 수치의 범위</a></li></ol></nav></div>
+    </div>
+  </div>
+  </main>
+  <footer class="site-footer"><span>KAY / 개발 경험을 쉬운 말로</span><span>해설 기준 2026-10-20 · 사이트 갱신 2026-10-22</span></footer>
+</body>
+</html>
